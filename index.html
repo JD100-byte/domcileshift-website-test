@@ -609,45 +609,33 @@
     #results-count {
       font-size: 14px;
       color: var(--text-2);
-      margin-bottom: 28px;
+      margin-bottom: 24px;
     }
     #results-count strong { color: var(--accent); }
 
     .results-grid {
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 16px;
     }
 
     .result-card {
       background: var(--surface);
       border: 1.5px solid var(--border);
       border-radius: var(--radius-lg);
-      overflow: hidden;
+      padding: 24px;
       transition: all var(--transition);
       animation: fadeUp 0.4s ease both;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.15);
     }
-    .result-card:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(0,0,0,0.2); border-color: rgba(228,234,163,0.25); }
+    .result-card:hover { border-color: rgba(228,234,163,0.3); transform: translateY(-2px); }
     .result-card.top-pick {
       border-color: var(--gold);
-      box-shadow: 0 4px 24px rgba(201,168,76,0.15);
+      background: linear-gradient(135deg, rgba(201,168,76,0.08) 0%, var(--surface) 60%);
     }
-
-    /* Coloured top bar */
-    .result-card-bar {
-      height: 4px;
-      background: var(--border);
-    }
-    .result-card.top-pick .result-card-bar {
-      background: linear-gradient(90deg, var(--gold), rgba(201,168,76,0.3));
-    }
-
-    .result-card-body { padding: 24px; }
 
     .result-card-header {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: space-between;
       margin-bottom: 20px;
       gap: 12px;
@@ -657,41 +645,48 @@
       align-items: center;
       gap: 14px;
     }
-    .result-flag { font-size: 36px; line-height: 1; }
+    .result-flag { font-size: 32px; line-height: 1; }
     .result-name {
       font-family: 'Outfit', sans-serif;
       font-size: 22px;
       font-weight: 600;
       color: var(--text-1);
     }
-    .result-region {
-      font-size: 12px;
-      color: var(--text-2);
-      margin-top: 3px;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
+    .result-region { font-size: 12px; color: var(--text-2); margin-top: 2px; }
 
-    .result-card-right {
+    .score-badge {
       display: flex;
       flex-direction: column;
-      align-items: flex-end;
-      gap: 8px;
+      align-items: center;
       flex-shrink: 0;
     }
-    .score-pill {
-      font-size: 13px;
-      font-weight: 700;
-      padding: 6px 14px;
-      border-radius: 100px;
-      background: rgba(228,234,163,0.12);
-      border: 1.5px solid rgba(228,234,163,0.3);
-      color: var(--accent);
+    .score-ring {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: conic-gradient(var(--accent) var(--pct, 0%), var(--card) 0%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
     }
-    .result-card.top-pick .score-pill {
-      background: rgba(201,168,76,0.12);
-      border-color: var(--gold-dim);
-      color: var(--gold);
+    .score-ring::before {
+      content: '';
+      width: 50px;
+      height: 50px;
+      background: var(--surface);
+      border-radius: 50%;
+      position: absolute;
+    }
+    .result-card.top-pick .score-ring {
+      background: conic-gradient(var(--gold) var(--pct, 0%), var(--card) 0%);
+    }
+    .score-num {
+      position: relative;
+      z-index: 1;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-1);
     }
     .top-badge {
       display: inline-flex;
@@ -702,29 +697,26 @@
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--gold);
-      background: rgba(201,168,76,0.1);
+      background: rgba(201,168,76,0.12);
       border: 1px solid var(--gold-dim);
       padding: 4px 10px;
       border-radius: 100px;
+      margin-top: 6px;
     }
 
-    /* Tax grid — 4 columns */
     .result-taxes {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
       gap: 8px;
-      margin-bottom: 18px;
+      margin-bottom: 16px;
     }
-    @media (max-width: 600px) { .result-taxes { grid-template-columns: repeat(2, 1fr); } }
     .rt {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 12px 14px;
-      text-align: center;
+      background: var(--card);
+      border-radius: 8px;
+      padding: 10px 12px;
     }
-    .rt-label { font-size: 10px; color: var(--text-2); font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 5px; }
-    .rt-val { font-size: 16px; font-weight: 700; color: var(--text-1); }
+    .rt-label { font-size: 10px; color: var(--text-2); font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 3px; }
+    .rt-val { font-size: 15px; font-weight: 700; color: var(--text-1); }
     .rt-val.zero { color: var(--success); }
     .rt-val.low  { color: var(--accent); }
     .rt-val.med  { color: var(--warm); }
@@ -733,8 +725,8 @@
     .result-tags {
       display: flex;
       flex-wrap: wrap;
-      gap: 7px;
-      margin-bottom: 16px;
+      gap: 8px;
+      margin-bottom: 20px;
     }
     .tag {
       font-size: 11px;
@@ -747,22 +739,6 @@
     }
     .tag.good { background: rgba(126,200,160,0.1); border-color: rgba(126,200,160,0.3); color: var(--success); }
     .tag.warn { background: rgba(212,187,168,0.1); border-color: rgba(212,187,168,0.3); color: var(--warm); }
-
-    .result-note {
-      font-size: 13px;
-      color: var(--text-2);
-      line-height: 1.65;
-      padding: 14px;
-      background: var(--bg);
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      margin-bottom: 14px;
-    }
-
-    .result-card-footer {
-      display: flex;
-      justify-content: flex-end;
-    }
 
     /* ── JURISDICTION INFO BUTTON ── */
     .btn-info {
@@ -2160,46 +2136,39 @@ function showResults() {
 
     return `
       <div class="result-card ${isTop ? 'top-pick' : ''}" style="animation-delay:${i * 0.06}s">
-        <div class="result-card-bar"></div>
-        <div class="result-card-body">
-
-          <div class="result-card-header">
-            <div class="result-country">
-              <span class="result-flag">${j.flag}</span>
-              <div>
-                <div class="result-name">${j.name}</div>
-                <div class="result-region">${j.region}</div>
-              </div>
-            </div>
-            <div class="result-card-right">
-              <span class="score-pill">${pct}% match</span>
-              ${isTop ? '<span class="top-badge">⭐ Top Pick</span>' : ''}
+        <div class="result-card-header">
+          <div class="result-country">
+            <span class="result-flag">${j.flag}</span>
+            <div>
+              <div class="result-name">${j.name}</div>
+              <div class="result-region">${j.region}</div>
             </div>
           </div>
-
-          <div class="result-taxes">
-            <div class="rt"><div class="rt-label">Income Tax</div>${valClass(j.income)}</div>
-            <div class="rt"><div class="rt-label">Capital Gains</div>${valClass(j.cgt)}</div>
-            <div class="rt"><div class="rt-label">Corporate Tax</div>${valClass(j.corporate)}</div>
-            <div class="rt"><div class="rt-label">Wealth Tax</div>${valClass(j.wealth)}</div>
-            <div class="rt"><div class="rt-label">Inheritance</div>${valClass(j.inheritance)}</div>
-            <div class="rt"><div class="rt-label">Social Security</div>${valClass(j.social)}</div>
-            <div class="rt"><div class="rt-label">Territorial</div>${valClass(j.territorial, 'flag')}</div>
-            <div class="rt"><div class="rt-label">Investor Visa</div>${valClass(j.investorVisa, 'flag')}</div>
+          <div class="score-badge">
+            <div class="score-ring" ${style}>
+              <span class="score-num">${pct}%</span>
+            </div>
+            ${isTop ? '<span class="top-badge">⭐ Top Pick</span>' : ''}
           </div>
-
-          <div class="result-tags">${tags}</div>
-
-          <div class="result-note">${j.note}</div>
-
-          <div class="result-card-footer">
-            <button class="btn-info" style="margin-top:0" onclick="openModal('${j.name}')">
-              <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/><line x1="8" y1="7" x2="8" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="8" cy="5" r="0.75" fill="currentColor"/></svg>
-              Jurisdiction Info
-            </button>
-          </div>
-
         </div>
+
+        <div class="result-taxes">
+          <div class="rt"><div class="rt-label">Income</div>${valClass(j.income)}</div>
+          <div class="rt"><div class="rt-label">Cap. Gains</div>${valClass(j.cgt)}</div>
+          <div class="rt"><div class="rt-label">Corporate</div>${valClass(j.corporate)}</div>
+          <div class="rt"><div class="rt-label">Wealth</div>${valClass(j.wealth)}</div>
+          <div class="rt"><div class="rt-label">Inheritance</div>${valClass(j.inheritance)}</div>
+          <div class="rt"><div class="rt-label">Social Sec.</div>${valClass(j.social)}</div>
+          <div class="rt"><div class="rt-label">Territorial</div>${valClass(j.territorial, 'flag')}</div>
+          <div class="rt"><div class="rt-label">Investor Visa</div>${valClass(j.investorVisa, 'flag')}</div>
+        </div>
+
+        <div class="result-tags">${tags}</div>
+        <div style="font-size:13px; color:var(--text-2); line-height:1.6; border-top:1px solid var(--border); padding-top:14px;">${j.note}</div>
+        <button class="btn-info" onclick="openModal('${j.name}')">
+          <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/><line x1="8" y1="7" x2="8" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="8" cy="5" r="0.75" fill="currentColor"/></svg>
+          Jurisdiction Info
+        </button>
       </div>`;
   }).join('');
 
