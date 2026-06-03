@@ -285,14 +285,17 @@
       display: flex;
       justify-content: space-between;
       margin-bottom: 10px;
+      gap: 4px;
     }
     .progress-label {
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 600;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
       color: var(--text-2);
       transition: color var(--transition);
+      text-align: center;
+      flex: 1;
     }
     .progress-label.active { color: var(--accent); }
     .progress-track {
@@ -461,23 +464,30 @@
       background: var(--surface);
       border: 2px solid var(--border);
       border-radius: var(--radius);
-      padding: 16px 20px;
+      padding: 18px 20px;
       cursor: pointer;
       display: flex;
       align-items: center;
       gap: 14px;
       transition: all var(--transition);
       user-select: none;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
     }
-    .criterion:hover { border-color: var(--accent); background: var(--card); }
+    .criterion:hover {
+      border-color: var(--accent);
+      background: var(--card);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(228,234,163,0.12);
+    }
     .criterion.selected {
       border-color: var(--accent);
-      background: rgba(228,234,163,0.08);
+      background: rgba(228,234,163,0.1);
+      box-shadow: 0 0 0 3px rgba(228,234,163,0.15), 0 4px 16px rgba(228,234,163,0.15);
     }
     .criterion-check {
-      width: 22px;
-      height: 22px;
-      border-radius: 6px;
+      width: 26px;
+      height: 26px;
+      border-radius: 7px;
       border: 2px solid var(--border);
       background: var(--card);
       display: flex;
@@ -485,14 +495,14 @@
       justify-content: center;
       flex-shrink: 0;
       transition: all var(--transition);
-      font-size: 13px;
+      font-size: 14px;
     }
     .criterion.selected .criterion-check {
       background: var(--accent);
       border-color: var(--accent);
       color: var(--bg);
     }
-    .criterion-text { font-size: 14px; font-weight: 500; color: var(--text-1); }
+    .criterion-text { font-size: 14px; font-weight: 600; color: var(--text-1); }
     .criterion-sub  { font-size: 12px; color: var(--text-2); margin-top: 2px; }
 
     /* ── YES/NO TOGGLE ── */
@@ -504,21 +514,26 @@
     }
     .yesno-item {
       background: var(--surface);
-      border: 1px solid var(--border);
+      border: 2px solid var(--border);
       border-radius: var(--radius-lg);
-      padding: 20px 24px;
+      padding: 22px 24px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+      transition: border-color var(--transition);
+    }
+    .yesno-item:has(.active-yes), .yesno-item:has(.active-no) {
+      border-color: rgba(228,234,163,0.35);
     }
     .yesno-question {
-      font-size: 15px;
-      font-weight: 500;
+      font-size: 16px;
+      font-weight: 600;
       color: var(--text-1);
-      margin-bottom: 14px;
+      margin-bottom: 16px;
     }
-    .yesno-question span { color: var(--text-2); font-size: 13px; font-weight: 400; display: block; margin-top: 4px; }
-    .yesno-btns { display: flex; gap: 10px; }
+    .yesno-question span { color: var(--text-2); font-size: 13px; font-weight: 400; display: block; margin-top: 6px; }
+    .yesno-btns { display: flex; gap: 12px; }
     .yesno-btn {
       flex: 1;
-      padding: 10px;
+      padding: 13px;
       border-radius: var(--radius);
       border: 2px solid var(--border);
       background: var(--card);
@@ -528,10 +543,26 @@
       font-weight: 600;
       cursor: pointer;
       transition: all var(--transition);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
     }
-    .yesno-btn:hover { border-color: var(--accent); color: var(--text-1); }
-    .yesno-btn.active-yes { border-color: var(--success); background: rgba(126,200,160,0.12); color: var(--success); }
-    .yesno-btn.active-no  { border-color: var(--danger);  background: rgba(224,112,112,0.10); color: var(--danger); }
+    .yesno-btn:hover {
+      border-color: var(--accent);
+      color: var(--text-1);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(228,234,163,0.12);
+    }
+    .yesno-btn.active-yes {
+      border-color: var(--success);
+      background: rgba(126,200,160,0.15);
+      color: var(--success);
+      box-shadow: 0 0 0 3px rgba(126,200,160,0.15);
+    }
+    .yesno-btn.active-no {
+      border-color: var(--danger);
+      background: rgba(224,112,112,0.12);
+      color: var(--danger);
+      box-shadow: 0 0 0 3px rgba(224,112,112,0.12);
+    }
 
     /* ── NAVIGATION BUTTONS ── */
     .nav-row {
@@ -562,38 +593,61 @@
     }
     .btn-primary:hover { background: var(--accent-soft); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(228,234,163,0.2); }
     .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
+    .btn-primary.ready {
+      background: var(--accent);
+      box-shadow: 0 0 0 3px rgba(228,234,163,0.3), 0 8px 28px rgba(228,234,163,0.35);
+      animation: pulse-btn 2s ease-in-out infinite;
+      font-size: 16px;
+      padding: 16px 36px;
+    }
+    @keyframes pulse-btn {
+      0%, 100% { box-shadow: 0 0 0 3px rgba(228,234,163,0.3), 0 8px 28px rgba(228,234,163,0.35); }
+      50%       { box-shadow: 0 0 0 7px rgba(228,234,163,0.12), 0 8px 28px rgba(228,234,163,0.5); }
+    }
 
     /* ── RESULTS ── */
     #results-count {
       font-size: 14px;
       color: var(--text-2);
-      margin-bottom: 24px;
+      margin-bottom: 28px;
     }
     #results-count strong { color: var(--accent); }
 
     .results-grid {
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 20px;
     }
 
     .result-card {
       background: var(--surface);
       border: 1.5px solid var(--border);
       border-radius: var(--radius-lg);
-      padding: 24px;
+      overflow: hidden;
       transition: all var(--transition);
       animation: fadeUp 0.4s ease both;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.15);
     }
-    .result-card:hover { border-color: rgba(228,234,163,0.3); transform: translateY(-2px); }
+    .result-card:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(0,0,0,0.2); border-color: rgba(228,234,163,0.25); }
     .result-card.top-pick {
       border-color: var(--gold);
-      background: linear-gradient(135deg, rgba(201,168,76,0.08) 0%, var(--surface) 60%);
+      box-shadow: 0 4px 24px rgba(201,168,76,0.15);
     }
+
+    /* Coloured top bar */
+    .result-card-bar {
+      height: 4px;
+      background: var(--border);
+    }
+    .result-card.top-pick .result-card-bar {
+      background: linear-gradient(90deg, var(--gold), rgba(201,168,76,0.3));
+    }
+
+    .result-card-body { padding: 24px; }
 
     .result-card-header {
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       justify-content: space-between;
       margin-bottom: 20px;
       gap: 12px;
@@ -603,7 +657,7 @@
       align-items: center;
       gap: 14px;
     }
-    .result-flag { font-size: 32px; line-height: 1; }
+    .result-flag { font-size: 36px; line-height: 1; }
     .result-name {
       font-family: 'Outfit', sans-serif;
       font-size: 22px;
@@ -613,44 +667,32 @@
     .result-region {
       font-size: 12px;
       color: var(--text-2);
-      margin-top: 2px;
+      margin-top: 3px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
     }
 
-    .score-badge {
+    .result-card-right {
       display: flex;
       flex-direction: column;
-      align-items: center;
+      align-items: flex-end;
+      gap: 8px;
       flex-shrink: 0;
     }
-    .score-ring {
-      width: 64px;
-      height: 64px;
-      border-radius: 50%;
-      background: conic-gradient(var(--accent) var(--pct, 0%), var(--card) 0%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-    }
-    .score-ring::before {
-      content: '';
-      width: 50px;
-      height: 50px;
-      background: var(--surface);
-      border-radius: 50%;
-      position: absolute;
-    }
-    .result-card.top-pick .score-ring {
-      background: conic-gradient(var(--gold) var(--pct, 0%), var(--card) 0%);
-    }
-    .score-num {
-      position: relative;
-      z-index: 1;
-      font-size: 14px;
+    .score-pill {
+      font-size: 13px;
       font-weight: 700;
-      color: var(--text-1);
+      padding: 6px 14px;
+      border-radius: 100px;
+      background: rgba(228,234,163,0.12);
+      border: 1.5px solid rgba(228,234,163,0.3);
+      color: var(--accent);
     }
-
+    .result-card.top-pick .score-pill {
+      background: rgba(201,168,76,0.12);
+      border-color: var(--gold-dim);
+      color: var(--gold);
+    }
     .top-badge {
       display: inline-flex;
       align-items: center;
@@ -660,26 +702,29 @@
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--gold);
-      background: rgba(201,168,76,0.12);
+      background: rgba(201,168,76,0.1);
       border: 1px solid var(--gold-dim);
       padding: 4px 10px;
       border-radius: 100px;
-      margin-top: 6px;
     }
 
+    /* Tax grid — 4 columns */
     .result-taxes {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      grid-template-columns: repeat(4, 1fr);
       gap: 8px;
-      margin-bottom: 16px;
+      margin-bottom: 18px;
     }
+    @media (max-width: 600px) { .result-taxes { grid-template-columns: repeat(2, 1fr); } }
     .rt {
-      background: var(--card);
-      border-radius: 8px;
-      padding: 10px 12px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      text-align: center;
     }
-    .rt-label { font-size: 10px; color: var(--text-2); font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 3px; }
-    .rt-val { font-size: 15px; font-weight: 700; color: var(--text-1); }
+    .rt-label { font-size: 10px; color: var(--text-2); font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 5px; }
+    .rt-val { font-size: 16px; font-weight: 700; color: var(--text-1); }
     .rt-val.zero { color: var(--success); }
     .rt-val.low  { color: var(--accent); }
     .rt-val.med  { color: var(--warm); }
@@ -688,8 +733,8 @@
     .result-tags {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 20px;
+      gap: 7px;
+      margin-bottom: 16px;
     }
     .tag {
       font-size: 11px;
@@ -702,6 +747,22 @@
     }
     .tag.good { background: rgba(126,200,160,0.1); border-color: rgba(126,200,160,0.3); color: var(--success); }
     .tag.warn { background: rgba(212,187,168,0.1); border-color: rgba(212,187,168,0.3); color: var(--warm); }
+
+    .result-note {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.65;
+      padding: 14px;
+      background: var(--bg);
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      margin-bottom: 14px;
+    }
+
+    .result-card-footer {
+      display: flex;
+      justify-content: flex-end;
+    }
 
     /* ── JURISDICTION INFO BUTTON ── */
     .btn-info {
@@ -1159,7 +1220,10 @@
       <div class="about-photo-row">
         <img src="data:image/jpeg;base64,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" alt="Jo Daniel Wiese" class="about-photo">
         <div class="about-photo-caption">
-          <div class="about-founder-name">Jo Daniel (J.D.) Wiese</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+            <div class="about-founder-name">Jo Daniel (J.D.) Wiese</div>
+            <a href="mailto:post@domicileshift.com" class="header-about-btn" style="text-decoration:none;font-size:10px;padding:5px 12px;">Contact Us</a>
+          </div>
           <div class="about-founder-role">Founder &amp; Attorney</div>
           <div class="about-founder-role"><a href="https://www.wieseadv.no/" target="_blank" rel="noopener">Wiese Law Firm</a></div>
         </div>
@@ -1225,7 +1289,8 @@
   <div class="hero">
     <div class="hero-text">
       <h1>Find your <em>ideal</em><br>tax jurisdiction</h1>
-      <p>Answer five simple questions and we'll match you with the world's most tax-efficient destinations for your profile.</p>
+      <p>Answer a few simple questions and we'll match you with the world's most tax-efficient destinations for your profile.</p>
+      <p style="font-size:13px;color:var(--text-2);margin-top:12px;line-height:1.65;border-left:2px solid var(--accent);padding-left:12px;">DomicileShift is designed for those who want to make informed, independent decisions about changing their tax residency — giving you the knowledge and tools to handle the process largely on your own terms.</p>
     </div>
     <div class="sphere-wrap">
       <canvas id="sphere-canvas"></canvas>
@@ -1242,8 +1307,10 @@
       <span class="progress-label active" data-step="1">Current Country</span>
       <span class="progress-label" data-step="2">Entity Type</span>
       <span class="progress-label" data-step="3">Tax Priorities</span>
-      <span class="progress-label" data-step="4">Filters</span>
-      <span class="progress-label" data-step="5">Results</span>
+      <span class="progress-label" data-step="4">Region</span>
+      <span class="progress-label" data-step="5">Filters</span>
+      <span class="progress-label" data-step="6">Language</span>
+      <span class="progress-label" data-step="7">Results</span>
     </div>
     <div class="progress-track">
       <div class="progress-fill" id="progress-fill" style="width:20%"></div>
@@ -1303,7 +1370,7 @@
     <div style="margin-top:32px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px 28px;">
       <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;">About DomicileShift</div>
       <p style="font-size:14px;color:var(--text-1);line-height:1.75;margin-bottom:14px;">
-        <strong style="color:var(--text-1)">DomicileShift</strong> is a relocation advisory service operated by the <a href="https://www.wieseadv.no/" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none">Wiese Law Group</a> — a specialist legal service provider in tax, corporate law, and securities. We help individuals and businesses identify and establish tax residency in jurisdictions that optimise their financial position.
+        <strong style="color:var(--text-1)">DomicileShift</strong> is a relocation advisory service operated by the <a href="https://www.wieseadv.no/" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none">Wiese Law Group</a> — a specialist legal service provider in tax, corporate law, and securities. We help individuals, expats, businesses and others to identify and establish tax residency in jurisdictions that optimise their financial position.
       </p>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
         <div style="background:var(--card);border-radius:var(--radius);padding:14px 16px;">
@@ -1324,6 +1391,12 @@
             <li style="font-size:12px;color:var(--text-2);display:flex;gap:8px;align-items:baseline"><span style="color:var(--accent);font-size:10px">▸</span>Banking, compliance &amp; ongoing advice</li>
           </ul>
         </div>
+      </div>
+      <div style="margin-top:20px;text-align:center;">
+        <a href="mailto:post@domicileshift.com" class="btn-cta" style="display:inline-flex;align-items:center;gap:8px;text-decoration:none">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="3" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.4"/><path d="M1 5l7 5 7-5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          Contact Us
+        </a>
       </div>
     </div>
   </div>
@@ -1378,11 +1451,51 @@
   </div>
 
   <!-- ═══════════════════════════════════════════
-       STEP 4 — ADDITIONAL FILTERS
+       STEP 4 — PREFERRED REGION
   ════════════════════════════════════════════ -->
   <div class="step" id="step-4">
     <div class="step-header">
-      <span class="step-num">Step 4 of 5</span>
+      <span class="step-num">Step 4 of 6</span>
+      <h2>Do you have a preferred region?</h2>
+      <p>Select a region to focus your results, or skip to see all jurisdictions.</p>
+    </div>
+
+    <div class="entity-cards" style="grid-template-columns:repeat(auto-fill,minmax(160px,1fr))">
+      <div class="entity-card" id="region-americas" onclick="selectRegion('Americas')">
+        <span class="entity-card-icon">🌎</span>
+        <div class="entity-card-title">Americas</div>
+        <div class="entity-card-desc">North, Central &amp; South America and Caribbean</div>
+      </div>
+      <div class="entity-card" id="region-europe" onclick="selectRegion('Europe')">
+        <span class="entity-card-icon">🌍</span>
+        <div class="entity-card-title">Europe</div>
+        <div class="entity-card-desc">Western, Central &amp; Southern Europe</div>
+      </div>
+      <div class="entity-card" id="region-middleeast" onclick="selectRegion('Middle East')">
+        <span class="entity-card-icon">🕌</span>
+        <div class="entity-card-title">Middle East</div>
+        <div class="entity-card-desc">UAE, Dubai and Gulf region</div>
+      </div>
+      <div class="entity-card" id="region-asia" onclick="selectRegion('Asia')">
+        <span class="entity-card-icon">🌏</span>
+        <div class="entity-card-title">Asia</div>
+        <div class="entity-card-desc">South-East Asia and East Asia</div>
+      </div>
+    </div>
+
+    <div class="nav-row">
+      <button class="btn btn-ghost" onclick="goTo(3)">← Back</button>
+      <button class="btn btn-ghost" onclick="selectRegion(null)">No preference — show all →</button>
+      <button class="btn btn-primary" id="step4-next" disabled onclick="goTo(5)">Continue →</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       STEP 5 — ADDITIONAL FILTERS
+  ════════════════════════════════════════════ -->
+  <div class="step" id="step-5">
+    <div class="step-header">
+      <span class="step-num">Step 5 of 6</span>
       <h2>A few more preferences</h2>
       <p>These filters will help us narrow down the most realistic options for your situation.</p>
     </div>
@@ -1405,55 +1518,83 @@
           <span>Many top jurisdictions require a minimum investment of €250k–€2M+ for residency.</span>
         </div>
         <div class="yesno-btns">
-          <button class="yesno-btn" id="visa-yes" onclick="setYesNo('visa', true)">Yes, I qualify / willing</button>
-          <button class="yesno-btn" id="visa-no"  onclick="setYesNo('visa', false)">No, prefer standard residency</button>
+          <button class="yesno-btn" id="visa-yes" onclick="setYesNo('visa', true)">Yes</button>
+          <button class="yesno-btn" id="visa-no"  onclick="setYesNo('visa', false)">No, prefer standard residency with no upfront investment</button>
         </div>
       </div>
     </div>
 
     <div class="nav-row">
-      <button class="btn btn-ghost" onclick="goTo(3)">← Back</button>
-      <button class="btn btn-primary" id="step4-next" disabled onclick="showResults()">See My Matches →</button>
+      <button class="btn btn-ghost" onclick="goTo(4)">← Back</button>
+      <button class="btn btn-primary" id="step5-next" disabled onclick="goTo(6)">Continue →</button>
     </div>
   </div>
 
   <!-- ═══════════════════════════════════════════
-       STEP 5 — RESULTS
+       STEP 6 — LANGUAGE
   ════════════════════════════════════════════ -->
-  <div class="step" id="step-5">
+  <div class="step" id="step-6">
     <div class="step-header">
-      <span class="step-num">Step 5 of 5</span>
+      <span class="step-num">Step 6 of 7</span>
+      <h2>Language preference</h2>
+      <p>Do you need English to be the primary language for official and business matters?</p>
+    </div>
+
+    <div class="entity-cards">
+      <div class="entity-card" id="lang-english" onclick="selectLanguage('english')">
+        <span class="entity-card-icon" style="letter-spacing:4px">🇬🇧 🇺🇸</span>
+        <div class="entity-card-title">English</div>
+        <div class="entity-card-desc">Show only jurisdictions where English is the primary or widely-used official language.</div>
+      </div>
+      <div class="entity-card" id="lang-any" onclick="selectLanguage('any')">
+        <span class="entity-card-icon">🌐</span>
+        <div class="entity-card-title">Others OK</div>
+        <div class="entity-card-desc">I'm comfortable with non-English speaking jurisdictions — show all matches.</div>
+      </div>
+    </div>
+
+    <div class="nav-row">
+      <button class="btn btn-ghost" onclick="goTo(5)">← Back</button>
+      <button class="btn btn-primary" id="step6-next" disabled onclick="showResults()">See My Matches →</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       STEP 7 — RESULTS
+  ════════════════════════════════════════════ -->
+  <div class="step" id="step-7">
+    <div class="step-header">
+      <span class="step-num">Step 7 of 7</span>
       <h2>Your jurisdiction matches</h2>
       <p>Ranked by compatibility score based on your selected criteria.</p>
     </div>
 
     <div id="results-count"></div>
-    <div class="results-grid" id="results-grid"></div>
 
-    <!-- CTA -->
-    <div class="cta-block" id="cta-block" style="display:none">
+    <!-- CTA shown after top matches -->
+    <div class="cta-block" id="cta-block" style="display:none;margin-bottom:32px;">
       <div class="cta-eyebrow">Ready to make the move?</div>
       <h2>Get your complete Relocation Pack</h2>
-      <p>Our expert team delivers a personalised report covering legal steps, banking, visa pathways, and tax optimisation for your chosen jurisdiction.</p>
-      <div class="cta-includes">
-        <div class="cta-include-item">Personalised legal roadmap</div>
-        <div class="cta-include-item">Banking & financial setup guide</div>
-        <div class="cta-include-item">Visa application checklist</div>
-        <div class="cta-include-item">Tax optimisation strategies</div>
-        <div class="cta-include-item">Cost of living breakdown</div>
+      <p>Our expert team delivers a personalised report covering the legal emigration steps based on your current tax residency and requirements of your chosen jurisdiction.</p>
+      <div style="display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;">
+        <a href="https://forms.office.com/e/PWc6s3c035?lang=en" target="_blank" rel="noopener" class="btn-cta">
+          Get My Relocation Pack
+          <span class="cta-price">$390</span>
+        </a>
+        <a href="mailto:post@domicileshift.com" class="btn-cta" style="background:transparent;border:2px solid var(--accent);color:var(--accent);">
+          Contact Us
+        </a>
       </div>
-      <a href="https://domicileshift.com" target="_blank" rel="noopener" class="btn-cta">
-        Get My Relocation Pack
-        <span class="cta-price">$129</span>
-      </a>
     </div>
+
+    <div class="results-grid" id="results-grid"></div>
 
     <div style="text-align:center; margin-top:24px;">
       <button class="btn-restart" onclick="restart()">Start over with different criteria</button>
     </div>
 
     <div class="nav-row" style="justify-content:flex-start; margin-top:0;">
-      <button class="btn btn-ghost" onclick="goTo(4)">← Back</button>
+      <button class="btn btn-ghost" onclick="goTo(6)">← Back</button>
     </div>
   </div>
 
@@ -1510,17 +1651,10 @@
 
 <footer>
   <div class="wrapper">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:24px;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid rgba(30,90,120,0.3);text-align:left;">
-      <div>
-        <div style="font-weight:700;color:var(--text-1);margin-bottom:4px;">DomicileShift</div>
-        <div>c/o Wiese Law Firm AS</div>
-        <div>PB 205 Sentrum</div>
-        <div>0103 Oslo, Norway</div>
-      </div>
-      <div>
-        <div style="font-weight:700;color:var(--text-1);margin-bottom:4px;">Contact</div>
-        <div><a href="mailto:post@domicileshift.com">post@domicileshift.com</a></div>
-      </div>
+    <div style="text-align:center;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid rgba(30,90,120,0.3);">
+      <div style="font-weight:700;color:var(--text-1);margin-bottom:6px;">DomicileShift</div>
+      <div>c/o Wiese Law Firm AS &nbsp;·&nbsp; PB 205 Sentrum &nbsp;·&nbsp; 0103 Oslo, Norway</div>
+      <div style="margin-top:6px;"><a href="mailto:post@domicileshift.com">post@domicileshift.com</a></div>
     </div>
     Tax jurisdiction data is for informational purposes only and does not constitute legal or financial advice. Always consult a qualified tax professional before making relocation decisions.
   </div>
@@ -1569,203 +1703,189 @@ const JURISDICTIONS = [
   {
     name: 'UAE (Federal)', region: 'Middle East', flag: '🇦🇪',
     income: 0, cgt: 0, corporate: 9, wealth: 0, inheritance: 0, social: 0, territorial: true,
-    investorVisa: true, personalFriendly: true, corporateFriendly: true,
+    englishSpeaking: true, investorVisa: true, personalFriendly: true, corporateFriendly: true,
     tags: ['No income tax', 'No CGT', '9% corporate', 'Territorial'],
     note: 'Federal UAE — no personal income tax, 9% corporate from 2023.',
   },
   {
     name: 'Dubai (UAE)', region: 'Middle East', flag: '🇦🇪',
     income: 0, cgt: 0, corporate: 0, wealth: 0, inheritance: 0, social: 0, territorial: true,
-    investorVisa: true, personalFriendly: true, corporateFriendly: true,
+    englishSpeaking: true, investorVisa: true, personalFriendly: true, corporateFriendly: true,
     tags: ['Zero income tax', 'Zero CGT', 'Free zones available', 'Investor visa'],
     note: 'Dubai free zones offer 0% corporate tax for qualifying entities.',
   },
   {
     name: 'Monaco', region: 'Western Europe', flag: '🇲🇨',
     income: 0, cgt: 0, corporate: 0, wealth: 0, inheritance: 0, social: 13.8, territorial: true,
-    investorVisa: true, personalFriendly: true, corporateFriendly: false,
+    englishSpeaking: false, investorVisa: true, personalFriendly: true, corporateFriendly: false,
     tags: ['Zero income tax', 'No CGT', 'High cost of living'],
     note: 'No personal income tax. Residence requires €500k+ in bank.',
   },
   {
     name: 'Cayman Islands', region: 'Caribbean', flag: '🇰🇾',
     income: 0, cgt: 0, corporate: 0, wealth: 0, inheritance: 0, social: 0, territorial: true,
-    investorVisa: true, personalFriendly: true, corporateFriendly: true,
+    englishSpeaking: true, investorVisa: true, personalFriendly: true, corporateFriendly: true,
     tags: ['Fully tax-free', 'No reporting requirements', 'Major financial centre'],
     note: 'No direct taxation of any kind. Popular for funds and holding companies.',
   },
   {
     name: 'Bahamas', region: 'Caribbean', flag: '🇧🇸',
     income: 0, cgt: 0, corporate: 0, wealth: 0, inheritance: 0, social: 3.9, territorial: true,
-    investorVisa: true, personalFriendly: true, corporateFriendly: true,
+    englishSpeaking: true, investorVisa: true, personalFriendly: true, corporateFriendly: true,
     tags: ['Zero income tax', 'No CGT', 'English-speaking', 'Investor residency'],
     note: 'No direct taxes. Permanent residency available from $750k property investment.',
   },
   {
     name: 'Bermuda', region: 'Atlantic', flag: '🇧🇲',
     income: 0, cgt: 0, corporate: 0, wealth: 0, inheritance: 0, social: 10.5, territorial: true,
-    investorVisa: true, personalFriendly: true, corporateFriendly: true,
+    englishSpeaking: true, investorVisa: true, personalFriendly: true, corporateFriendly: true,
     tags: ['No income tax', 'Insurance hub', 'English common law'],
     note: 'No income, corporate or capital gains tax. Leading reinsurance centre.',
   },
   {
     name: 'Panama', region: 'Central America', flag: '🇵🇦',
     income: 0, cgt: 10, corporate: 25, wealth: 0, inheritance: 0, social: 9.75, territorial: true,
-    investorVisa: true, personalFriendly: true, corporateFriendly: true,
+    englishSpeaking: false, investorVisa: true, personalFriendly: true, corporateFriendly: true,
     tags: ['Territorial system', 'No foreign income tax', 'Friendly Nations Visa'],
     note: 'Strict territorial taxation — foreign-source income is never taxed.',
   },
   {
-    name: 'Paraguay', region: 'South America', flag: '🇵🇾',
-    income: 10, cgt: 10, corporate: 10, wealth: 0, inheritance: 0, social: 9, territorial: true,
-    investorVisa: true, personalFriendly: true, corporateFriendly: true,
-    tags: ['Flat 10% tax', 'Territorial', 'Very low cost of living'],
-    note: 'One of the cheapest and easiest residency programmes in the world.',
-  },
-  {
-    name: 'Georgia', region: 'Caucasus', flag: '🇬🇪',
-    income: 20, cgt: 0, corporate: 15, wealth: 0, inheritance: 0, social: 2, territorial: true,
-    investorVisa: true, personalFriendly: true, corporateFriendly: true,
-    tags: ['Virtual Zone 1% corporate', 'Territorial', 'Low cost of living'],
-    note: 'Virtual Zone companies pay 1% on foreign income. Strong fintech hub.',
-  },
-  {
     name: 'Malta', region: 'Mediterranean', flag: '🇲🇹',
     income: 35, cgt: 0, corporate: 5, wealth: 0, inheritance: 0, social: 10, territorial: true,
-    investorVisa: true, personalFriendly: true, corporateFriendly: true,
+    englishSpeaking: true, investorVisa: true, personalFriendly: true, corporateFriendly: true,
     tags: ['5% effective corporate', 'EU member', 'Non-dom available', 'English-speaking'],
     note: 'Malta\'s full imputation system can reduce effective corporate tax to 5%.',
   },
   {
     name: 'Cyprus', region: 'Mediterranean', flag: '🇨🇾',
     income: 35, cgt: 0, corporate: 12.5, wealth: 0, inheritance: 0, social: 8.8, territorial: true,
-    investorVisa: true, personalFriendly: true, corporateFriendly: true,
+    englishSpeaking: false, investorVisa: true, personalFriendly: true, corporateFriendly: true,
     tags: ['No CGT', '12.5% corporate', 'EU member', '60-day rule'],
     note: 'Non-dom status exempts foreign dividends and interest from local tax.',
   },
   {
     name: 'Portugal (NHR)', region: 'Western Europe', flag: '🇵🇹',
     income: 20, cgt: 28, corporate: 21, wealth: 0, inheritance: 10, social: 11, territorial: true,
-    investorVisa: true, personalFriendly: true, corporateFriendly: false,
+    englishSpeaking: false, investorVisa: true, personalFriendly: true, corporateFriendly: false,
     tags: ['20% flat income tax', 'NHR regime', 'EU member', 'D7/D8 visa'],
     note: 'NHR gives 10-year flat-rate tax on qualifying income. Warm climate, EU access.',
   },
   {
     name: 'Isle of Man', region: 'British Isles', flag: '🇮🇲',
     income: 20, cgt: 0, corporate: 0, wealth: 0, inheritance: 0, social: 11, territorial: false,
-    investorVisa: false, personalFriendly: true, corporateFriendly: true,
+    englishSpeaking: true, investorVisa: false, personalFriendly: true, corporateFriendly: true,
     tags: ['0% corporate tax', 'No CGT', 'Crown dependency'],
     note: 'Zero corporate tax rate. Major insurance and fintech jurisdiction.',
   },
   {
     name: 'Jersey', region: 'British Isles', flag: '🇯🇪',
     income: 20, cgt: 0, corporate: 0, wealth: 0, inheritance: 0, social: 6, territorial: false,
-    investorVisa: false, personalFriendly: true, corporateFriendly: true,
+    englishSpeaking: true, investorVisa: false, personalFriendly: true, corporateFriendly: true,
     tags: ['0% corporate', 'No CGT', 'Crown dependency', 'Financial hub'],
     note: 'Leading offshore finance centre. Zero corporate tax for most activities.',
   },
   {
     name: 'Guernsey', region: 'British Isles', flag: '🇬🇬',
     income: 20, cgt: 0, corporate: 0, wealth: 0, inheritance: 0, social: 6, territorial: false,
-    investorVisa: false, personalFriendly: true, corporateFriendly: true,
+    englishSpeaking: true, investorVisa: false, personalFriendly: true, corporateFriendly: true,
     tags: ['0% corporate', 'No CGT', 'Stable regulation', 'Fund domicile'],
     note: 'Highly stable fund and trust jurisdiction. Zero corporate tax.',
   },
   {
     name: 'Singapore', region: 'South-East Asia', flag: '🇸🇬',
     income: 24, cgt: 0, corporate: 17, wealth: 0, inheritance: 0, social: 20, territorial: true,
-    investorVisa: true, personalFriendly: true, corporateFriendly: true,
+    englishSpeaking: true, investorVisa: true, personalFriendly: true, corporateFriendly: true,
     tags: ['No CGT', 'Territorial', 'Global Investor Programme', 'AA-rated stable'],
     note: 'World-class financial centre. GIP visa requires $2.5M investment.',
   },
   {
     name: 'Hong Kong', region: 'East Asia', flag: '🇭🇰',
     income: 17, cgt: 0, corporate: 16.5, wealth: 0, inheritance: 0, social: 5, territorial: true,
-    investorVisa: true, personalFriendly: true, corporateFriendly: true,
+    englishSpeaking: true, investorVisa: true, personalFriendly: true, corporateFriendly: true,
     tags: ['Territorial', 'No CGT', 'Low flat rates', 'Asia financial hub'],
     note: 'Strict territorial system — offshore profits are fully exempt.',
   },
   {
     name: 'Liechtenstein', region: 'Central Europe', flag: '🇱🇮',
     income: 17.5, cgt: 0, corporate: 12.5, wealth: 0.1, inheritance: 0, social: 4.3, territorial: false,
-    investorVisa: false, personalFriendly: true, corporateFriendly: true,
+    englishSpeaking: false, investorVisa: false, personalFriendly: true, corporateFriendly: true,
     tags: ['Very low corporate', 'No CGT', 'EEA member', 'Banking secrecy'],
     note: 'One of the world\'s wealthiest nations per capita. Excellent for family offices.',
   },
   {
     name: 'Luxembourg', region: 'Western Europe', flag: '🇱🇺',
     income: 45.78, cgt: 21, corporate: 24.94, wealth: 0.5, inheritance: 0, social: 12.45, territorial: false,
-    investorVisa: false, personalFriendly: false, corporateFriendly: true,
+    englishSpeaking: false, investorVisa: false, personalFriendly: false, corporateFriendly: true,
     tags: ['EU fund domicile', 'Holding companies', 'Double tax treaties'],
     note: 'World\'s largest fund domicile. Excellent for EU holding structures.',
   },
   {
     name: 'Switzerland', region: 'Central Europe', flag: '🇨🇭',
     income: 22.5, cgt: 0, corporate: 14, wealth: 0.7, inheritance: 0, social: 5.3, territorial: false,
-    investorVisa: true, personalFriendly: true, corporateFriendly: true,
+    englishSpeaking: false, investorVisa: true, personalFriendly: true, corporateFriendly: true,
     tags: ['Lump sum taxation', 'No CGT', 'Low corporate', 'Wealth tax exists'],
     note: 'Lump sum taxation available for non-working foreigners from ~CHF 400k/yr.',
   },
   {
     name: 'Italy (Milan)', region: 'Southern Europe', flag: '🇮🇹',
     income: 7, cgt: 26, corporate: 24, wealth: 0, inheritance: 0, social: 9.49, territorial: true,
-    investorVisa: true, personalFriendly: true, corporateFriendly: true,
+    englishSpeaking: false, investorVisa: true, personalFriendly: true, corporateFriendly: true,
     tags: ['Flat 7% regime', 'Non-dom regime', 'Milan financial hub', 'Investor visa'],
     note: 'Italy\'s flat-tax regime offers a fixed €100k annual tax on all foreign income for new residents. Milan (Lombardy) is Italy\'s financial capital and a top relocation destination.',
   },
   {
     name: 'Antigua & Barbuda', region: 'Caribbean', flag: '🇦🇬',
     income: 0, cgt: 0, corporate: 25, wealth: 0, inheritance: 0, social: 7, territorial: true,
-    investorVisa: true, personalFriendly: true, corporateFriendly: false,
+    englishSpeaking: true, investorVisa: true, personalFriendly: true, corporateFriendly: false,
     tags: ['No income tax', 'No CGT', 'Citizenship from $100k', 'English-speaking'],
     note: 'CBI from $100k donation. Full passport with 150+ visa-free destinations.',
   },
   {
     name: 'Belize', region: 'Central America', flag: '🇧🇿',
     income: 0, cgt: 0, corporate: 1.75, wealth: 0, inheritance: 0, social: 7, territorial: true,
-    investorVisa: true, personalFriendly: true, corporateFriendly: true,
+    englishSpeaking: true, investorVisa: true, personalFriendly: true, corporateFriendly: true,
     tags: ['Territorial', 'No income on foreign', 'QRP retirement programme', 'English-speaking'],
     note: 'Territorial taxation. QRP visa available from age 45 with $2k/month income.',
   },
   {
     name: 'Costa Rica', region: 'Central America', flag: '🇨🇷',
     income: 25, cgt: 15, corporate: 30, wealth: 0, inheritance: 0, social: 9.34, territorial: true,
-    investorVisa: true, personalFriendly: true, corporateFriendly: true,
+    englishSpeaking: false, investorVisa: true, personalFriendly: true, corporateFriendly: true,
     tags: ['Territorial', 'Rentista visa', 'Stable democracy', 'High quality of life'],
     note: 'Foreign-source income not taxed. Rentista visa from $2,500/month income.',
   },
   {
     name: 'Thailand (LTR)', region: 'South-East Asia', flag: '🇹🇭',
     income: 17, cgt: 0, corporate: 20, wealth: 0, inheritance: 10, social: 5, territorial: true,
-    investorVisa: true, personalFriendly: true, corporateFriendly: true,
+    englishSpeaking: false, investorVisa: true, personalFriendly: true, corporateFriendly: true,
     tags: ['LTR visa 10 years', 'No CGT', 'Territorial', 'Low cost of living'],
     note: 'Long-Term Resident visa gives 10-year stay and tax exemption on foreign income.',
   },
   {
     name: 'Malaysia (MM2H)', region: 'South-East Asia', flag: '🇲🇾',
     income: 30, cgt: 0, corporate: 24, wealth: 0, inheritance: 0, social: 11, territorial: true,
-    investorVisa: true, personalFriendly: true, corporateFriendly: true,
+    englishSpeaking: false, investorVisa: true, personalFriendly: true, corporateFriendly: true,
     tags: ['No CGT', 'Territorial', 'MM2H 10-year visa', 'Low cost of living'],
     note: 'MM2H requires RM1.5M (~$350k) in fixed deposit. Territorial taxation.',
   },
   {
     name: 'USA', region: 'North America', flag: '🇺🇸',
     income: 37, cgt: 23.8, corporate: 21, wealth: 0, inheritance: 40, social: 7.65, territorial: false,
-    investorVisa: true, personalFriendly: false, corporateFriendly: true,
+    englishSpeaking: true, investorVisa: true, personalFriendly: false, corporateFriendly: true,
     tags: ['EB-5 investor visa', 'Citizenship-based taxation', 'No wealth tax', 'Treaty network'],
     note: 'USA taxes citizens/residents worldwide. EB-5 visa from $800k investment.',
   },
   {
     name: 'Canada', region: 'North America', flag: '🇨🇦',
     income: 53.5, cgt: 26.8, corporate: 26.5, wealth: 0, inheritance: 0, social: 5.95, territorial: false,
-    investorVisa: true, personalFriendly: false, corporateFriendly: false,
+    englishSpeaking: true, investorVisa: true, personalFriendly: false, corporateFriendly: false,
     tags: ['Investor visa available', 'Worldwide taxation', 'High income tax', 'No wealth tax'],
     note: 'High taxes but strong social services. Start-up visa and investor streams available.',
   },
   {
     name: 'Sweden', region: 'Northern Europe', flag: '🇸🇪',
     income: 57, cgt: 30, corporate: 20.6, wealth: 0, inheritance: 0, social: 7, territorial: false,
-    investorVisa: false, personalFriendly: false, corporateFriendly: false,
+    englishSpeaking: false, investorVisa: false, personalFriendly: false, corporateFriendly: false,
     tags: ['Abolished wealth tax', 'Abolished inheritance tax', 'High income tax', 'High CGT'],
     note: 'Despite abolished wealth/inheritance taxes, income and CGT remain very high.',
   },
@@ -1777,10 +1897,12 @@ const JURISDICTIONS = [
 const state = {
   currentStep: 1,
   currentCountry: null,
-  entityType: null,       // 'person' | 'company'
+  entityType: null,
   selectedCriteria: new Set(),
-  wealthOk: null,         // true | false
-  visaOk: null,           // true | false
+  preferredRegion: null,
+  preferredLanguage: null,  // 'english' | 'any'
+  wealthOk: null,
+  visaOk: null,
 };
 
 // ═══════════════════════════════════════════
@@ -1793,12 +1915,11 @@ function goTo(step) {
   updateProgress(step);
   window.scrollTo({ top: 0, behavior: 'smooth' });
   if (step === 3) buildCriteriaGrid();
-  // Hide live panel on results step — results are shown full width
-  document.getElementById('live-panel').style.display = step === 5 ? 'none' : 'flex';
+  document.getElementById('live-panel').style.display = step === 7 ? 'none' : 'flex';
 }
 
 function updateProgress(step) {
-  document.getElementById('progress-fill').style.width = (step / 5 * 100) + '%';
+  document.getElementById('progress-fill').style.width = (step / 7 * 100) + '%';
   document.querySelectorAll('.progress-label').forEach(el => {
     el.classList.toggle('active', parseInt(el.dataset.step) <= step);
   });
@@ -1811,9 +1932,10 @@ document.getElementById('current-country').addEventListener('change', function (
   const val = this.value;
   state.currentCountry = val;
   const btn = document.getElementById('step1-next');
-  if (!val) { btn.disabled = true; document.getElementById('current-tax-display').classList.remove('visible'); updateLivePanel(); return; }
+  if (!val) { btn.disabled = true; btn.classList.remove('ready'); document.getElementById('current-tax-display').classList.remove('visible'); updateLivePanel(); return; }
 
   btn.disabled = false;
+  btn.classList.add('ready');
   const data = CURRENT_COUNTRIES[val];
   const display = document.getElementById('current-tax-display');
   const grid = document.getElementById('current-tax-grid');
@@ -1847,7 +1969,9 @@ function selectEntity(type) {
   state.entityType = type;
   document.getElementById('entity-person').classList.toggle('selected', type === 'person');
   document.getElementById('entity-company').classList.toggle('selected', type === 'company');
-  document.getElementById('step2-next').disabled = false;
+  const btn = document.getElementById('step2-next');
+  btn.disabled = false;
+  btn.classList.add('ready');
   updateLivePanel();
 }
 
@@ -1881,11 +2005,41 @@ function toggleCriterion(id) {
 }
 
 function updateStep3Btn() {
-  document.getElementById('step3-next').disabled = state.selectedCriteria.size === 0;
+  const btn = document.getElementById('step3-next');
+  btn.disabled = state.selectedCriteria.size === 0;
+  btn.classList.toggle('ready', state.selectedCriteria.size > 0);
 }
 
 // ═══════════════════════════════════════════
-//  STEP 4 — YES/NO FILTERS
+//  STEP 4 — REGION
+// ═══════════════════════════════════════════
+const REGION_MAP = {
+  'Americas': ['Caribbean', 'Central America', 'South America', 'North America', 'Atlantic'],
+  'Europe':   ['Western Europe', 'Central Europe', 'Southern Europe', 'British Isles', 'Northern Europe', 'Mediterranean'],
+  'Middle East': ['Middle East'],
+  'Asia':     ['South-East Asia', 'East Asia', 'Caucasus', 'Indian Ocean', 'Pacific'],
+};
+
+function selectRegion(region) {
+  state.preferredRegion = region;
+  ['americas','europe','middleeast','asia'].forEach(r => {
+    document.getElementById(`region-${r}`)?.classList.remove('selected');
+  });
+  if (region) {
+    const idMap = { 'Americas':'americas', 'Europe':'europe', 'Middle East':'middleeast', 'Asia':'asia' };
+    document.getElementById(`region-${idMap[region]}`)?.classList.add('selected');
+    const btn = document.getElementById('step4-next');
+    btn.disabled = false;
+    btn.classList.add('ready');
+  } else {
+    // No preference — skip directly to step 5
+    goTo(5);
+  }
+  updateLivePanel();
+}
+
+// ═══════════════════════════════════════════
+//  STEP 5 — YES/NO FILTERS
 // ═══════════════════════════════════════════
 function setYesNo(type, val) {
   if (type === 'wealth') {
@@ -1897,7 +2051,22 @@ function setYesNo(type, val) {
     document.getElementById('visa-yes').className = 'yesno-btn' + (val ? ' active-yes' : '');
     document.getElementById('visa-no').className  = 'yesno-btn' + (!val ? ' active-no' : '');
   }
-  document.getElementById('step4-next').disabled = (state.wealthOk === null || state.visaOk === null);
+  const btn5 = document.getElementById('step5-next');
+  btn5.disabled = (state.wealthOk === null || state.visaOk === null);
+  btn5.classList.toggle('ready', state.wealthOk !== null && state.visaOk !== null);
+  updateLivePanel();
+}
+
+// ═══════════════════════════════════════════
+//  STEP 6 — LANGUAGE
+// ═══════════════════════════════════════════
+function selectLanguage(lang) {
+  state.preferredLanguage = lang;
+  document.getElementById('lang-english').classList.toggle('selected', lang === 'english');
+  document.getElementById('lang-any').classList.toggle('selected', lang === 'any');
+  const btn = document.getElementById('step6-next');
+  btn.disabled = false;
+  btn.classList.add('ready');
   updateLivePanel();
 }
 
@@ -1929,11 +2098,20 @@ function scoreJurisdiction(j) {
 //  RESULTS
 // ═══════════════════════════════════════════
 function showResults() {
-  goTo(5);
+  goTo(7);
 
   const isPerson = state.entityType === 'person';
-
   let pool = JURISDICTIONS.filter(j => isPerson ? j.personalFriendly : j.corporateFriendly);
+
+  // Region filter
+  if (state.preferredRegion && REGION_MAP[state.preferredRegion]) {
+    pool = pool.filter(j => REGION_MAP[state.preferredRegion].includes(j.region));
+  }
+
+  // Language filter
+  if (state.preferredLanguage === 'english') {
+    pool = pool.filter(j => j.englishSpeaking);
+  }
 
   // Wealth tax filter
   if (state.wealthOk === false) {
@@ -1983,39 +2161,46 @@ function showResults() {
 
     return `
       <div class="result-card ${isTop ? 'top-pick' : ''}" style="animation-delay:${i * 0.06}s">
-        <div class="result-card-header">
-          <div class="result-country">
-            <span class="result-flag">${j.flag}</span>
-            <div>
-              <div class="result-name">${j.name}</div>
-              <div class="result-region">${j.region}</div>
+        <div class="result-card-bar"></div>
+        <div class="result-card-body">
+
+          <div class="result-card-header">
+            <div class="result-country">
+              <span class="result-flag">${j.flag}</span>
+              <div>
+                <div class="result-name">${j.name}</div>
+                <div class="result-region">${j.region}</div>
+              </div>
+            </div>
+            <div class="result-card-right">
+              <span class="score-pill">${pct}% match</span>
+              ${isTop ? '<span class="top-badge">⭐ Top Pick</span>' : ''}
             </div>
           </div>
-          <div class="score-badge">
-            <div class="score-ring" ${style}>
-              <span class="score-num">${pct}%</span>
-            </div>
-            ${isTop ? '<span class="top-badge">⭐ Top Pick</span>' : ''}
+
+          <div class="result-taxes">
+            <div class="rt"><div class="rt-label">Income Tax</div>${valClass(j.income)}</div>
+            <div class="rt"><div class="rt-label">Capital Gains</div>${valClass(j.cgt)}</div>
+            <div class="rt"><div class="rt-label">Corporate Tax</div>${valClass(j.corporate)}</div>
+            <div class="rt"><div class="rt-label">Wealth Tax</div>${valClass(j.wealth)}</div>
+            <div class="rt"><div class="rt-label">Inheritance</div>${valClass(j.inheritance)}</div>
+            <div class="rt"><div class="rt-label">Social Security</div>${valClass(j.social)}</div>
+            <div class="rt"><div class="rt-label">Territorial</div>${valClass(j.territorial, 'flag')}</div>
+            <div class="rt"><div class="rt-label">Investor Visa</div>${valClass(j.investorVisa, 'flag')}</div>
           </div>
-        </div>
 
-        <div class="result-taxes">
-          <div class="rt"><div class="rt-label">Income</div>${valClass(j.income)}</div>
-          <div class="rt"><div class="rt-label">Cap. Gains</div>${valClass(j.cgt)}</div>
-          <div class="rt"><div class="rt-label">Corporate</div>${valClass(j.corporate)}</div>
-          <div class="rt"><div class="rt-label">Wealth</div>${valClass(j.wealth)}</div>
-          <div class="rt"><div class="rt-label">Inheritance</div>${valClass(j.inheritance)}</div>
-          <div class="rt"><div class="rt-label">Social Sec.</div>${valClass(j.social)}</div>
-          <div class="rt"><div class="rt-label">Territorial</div>${valClass(j.territorial, 'flag')}</div>
-          <div class="rt"><div class="rt-label">Investor Visa</div>${valClass(j.investorVisa, 'flag')}</div>
-        </div>
+          <div class="result-tags">${tags}</div>
 
-        <div class="result-tags">${tags}</div>
-        <div style="font-size:13px; color:var(--text-2); line-height:1.6; border-top:1px solid var(--border); padding-top:14px;">${j.note}</div>
-        <button class="btn-info" onclick="openModal('${j.name}')">
-          <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/><line x1="8" y1="7" x2="8" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="8" cy="5" r="0.75" fill="currentColor"/></svg>
-          Jurisdiction Info
-        </button>
+          <div class="result-note">${j.note}</div>
+
+          <div class="result-card-footer">
+            <button class="btn-info" style="margin-top:0" onclick="openModal('${j.name}')">
+              <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/><line x1="8" y1="7" x2="8" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="8" cy="5" r="0.75" fill="currentColor"/></svg>
+              Jurisdiction Info
+            </button>
+          </div>
+
+        </div>
       </div>`;
   }).join('');
 
@@ -2044,6 +2229,16 @@ function updateLivePanel() {
     const isPerson = state.entityType === 'person';
     pool = pool.filter(j => isPerson ? j.personalFriendly : j.corporateFriendly);
     phase = 2;
+  }
+
+  // Phase 2.5: region filter
+  if (state.preferredRegion && REGION_MAP[state.preferredRegion]) {
+    pool = pool.filter(j => REGION_MAP[state.preferredRegion].includes(j.region));
+  }
+
+  // Language filter
+  if (state.preferredLanguage === 'english') {
+    pool = pool.filter(j => j.englishSpeaking);
   }
 
   // Phase 3: criteria scoring filter — remove anything scoring 0 when criteria chosen
@@ -2117,12 +2312,29 @@ function restart() {
   state.currentCountry = null;
   state.entityType = null;
   state.selectedCriteria.clear();
+  state.preferredRegion = null;
+  state.preferredLanguage = null;
   state.wealthOk = null;
   state.visaOk = null;
   document.getElementById('current-country').value = '';
   document.getElementById('current-tax-display').classList.remove('visible');
   document.getElementById('step1-next').disabled = true;
+  document.getElementById('step1-next').classList.remove('ready');
   document.getElementById('step2-next').disabled = true;
+  document.getElementById('step2-next').classList.remove('ready');
+  document.getElementById('step3-next').classList.remove('ready');
+  document.getElementById('step4-next').disabled = true;
+  document.getElementById('step4-next').classList.remove('ready');
+  document.getElementById('step5-next').disabled = true;
+  document.getElementById('step5-next').classList.remove('ready');
+  document.getElementById('step6-next').disabled = true;
+  document.getElementById('step6-next').classList.remove('ready');
+  ['americas','europe','middleeast','asia'].forEach(r => {
+    document.getElementById(`region-${r}`)?.classList.remove('selected');
+  });
+  ['english','any'].forEach(l => {
+    document.getElementById(`lang-${l}`)?.classList.remove('selected');
+  });
   document.getElementById('step4-next').disabled = true;
   document.getElementById('entity-person').classList.remove('selected');
   document.getElementById('entity-company').classList.remove('selected');
