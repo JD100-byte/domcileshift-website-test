@@ -1224,6 +1224,9 @@
     .pref-slider { width: 100%; accent-color: var(--accent); cursor: pointer; }
     .pref-val { font-size: 12px; color: var(--accent); font-weight: 700; text-align: right; margin-top: 4px; }
     .pref-scale { display: flex; justify-content: space-between; font-size: 10px; color: var(--text-2); margin-top: 2px; }
+    #results-split.active { display: grid !important; grid-template-columns: 1fr 320px; gap: 28px; align-items: flex-start; }
+    @media (max-width: 900px) { #results-split.active { display: flex !important; flex-direction: column; } }
+
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(16px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -1248,7 +1251,7 @@
 
   <!-- HEADER -->
   <header>
-    <a href="/" style="text-decoration:none;display:flex;align-items:center;gap:12px;" onclick="event.preventDefault();restart();">
+    <a href="https://domicileshift.com" style="text-decoration:none;display:flex;align-items:center;gap:12px;">
       <div class="logo-mark">DS</div>
       <div class="logo-text">Domicile<span>Shift</span></div>
     </a>
@@ -1722,97 +1725,71 @@
     <div class="step-header">
       <span class="step-num">Step 8 of 8</span>
       <h2>Your jurisdiction matches</h2>
-      <p>Ranked by compatibility score based on your selected criteria.</p>
+      <p>Ranked by compatibility with your profile.</p>
     </div>
 
-    <div id="results-count"></div>
+    <div id="results-count" style="margin-bottom:20px;"></div>
 
-    <!-- 4-Tier Pack Selector -->
-    <div id="cta-block" style="display:none;margin-bottom:36px;">
-      <div style="text-align:center;margin-bottom:24px;">
-        <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;">Ready to make the move?</div>
-        <h2 style="font-family:'Outfit',sans-serif;font-size:24px;font-weight:600;color:var(--text-1);margin-bottom:8px;">Choose your Relocation Pack</h2>
-        <p style="font-size:14px;color:var(--text-2)">Pick the package that matches where you are in your decision-making process.</p>
+    <!-- 2-column: jurisdictions left, packs right -->
+    <div id="results-split" style="display:none;grid-template-columns:1fr 320px;gap:28px;align-items:flex-start;">
+
+      <!-- LEFT: cards -->
+      <div>
+        <div class="results-grid" id="results-top"></div>
+        <div id="results-rest-label" style="display:none;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-2);margin:24px 0 12px;">More Matches</div>
+        <div class="results-grid" id="results-grid"></div>
       </div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;">
 
-        <!-- Pack 1 - Jurisdiction Report -->
-        <div class="pack-card">
-          <div class="pack-header">
-            <div class="pack-name">Jurisdiction Report</div>
-            <div class="pack-price">$49</div>
-          </div>
-          <div class="pack-desc">For those starting their research. A clear, written report on your situation.</div>
-          <ul class="pack-list">
-            <li>✓ Tax summary for your current jurisdiction</li>
-            <li>✓ Tax summary for your new jurisdiction</li>
-            <li>✓ Residency alternatives overview</li>
-            <li>✓ PDF delivery within 5 business days</li>
-          </ul>
-          <a href="https://forms.office.com/e/PWc6s3c035?lang=en" target="_blank" class="pack-btn">Order Report →</a>
+      <!-- RIGHT: packs sticky -->
+      <div style="position:sticky;top:20px;display:flex;flex-direction:column;gap:12px;">
+        <div style="margin-bottom:4px;">
+          <div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:6px;">Ready to take the next step?</div>
+          <div style="font-family:'Outfit',sans-serif;font-size:18px;font-weight:600;color:var(--text-1);margin-bottom:4px;">Choose your Pack</div>
+          <div style="font-size:12px;color:var(--text-2);">Pick the level of support that fits where you are.</div>
         </div>
 
-        <!-- Pack 2 - Relocation Report -->
         <div class="pack-card">
-          <div class="pack-header">
-            <div class="pack-name">Relocation Report</div>
-            <div class="pack-price">$199</div>
-          </div>
-          <div class="pack-desc">For those who have identified a destination and need a deeper analysis before committing.</div>
-          <ul class="pack-list">
-            <li>✓ Everything in the Jurisdiction Report</li>
-            <li>✓ Exit tax implications from current country</li>
-            <li>✓ Step-by-step residency checklist</li>
-          </ul>
-          <a href="https://forms.office.com/e/PWc6s3c035?lang=en" target="_blank" class="pack-btn">Order Report →</a>
+          <div class="pack-header"><div class="pack-name">Jurisdiction Report</div><div class="pack-price">$49</div></div>
+          <div class="pack-desc" style="font-size:12px;">Tax summary for current &amp; new jurisdiction + residency alternatives. PDF in 5 days.</div>
+          <a href="https://forms.office.com/e/PWc6s3c035?lang=en" target="_blank" class="pack-btn" style="margin-top:8px;">Order →</a>
         </div>
 
-        <!-- Pack 3 - Get Started (featured) -->
+        <div class="pack-card">
+          <div class="pack-header"><div class="pack-name">Relocation Report</div><div class="pack-price">$249</div></div>
+          <div class="pack-desc" style="font-size:12px;">Everything above + exit tax analysis + residency checklist.</div>
+          <a href="https://forms.office.com/e/PWc6s3c035?lang=en" target="_blank" class="pack-btn" style="margin-top:8px;">Order →</a>
+        </div>
+
         <div class="pack-card pack-featured">
           <div class="pack-badge">Most Popular</div>
-          <div class="pack-header">
-            <div class="pack-name">Get Started</div>
-            <div class="pack-price">$390</div>
-          </div>
-          <div class="pack-desc">For investors ready to take action. Get a personalised legal roadmap and expert guidance.</div>
-          <ul class="pack-list">
-            <li>✓ Everything in the Relocation Report</li>
-            <li>✓ Personalised legal roadmap</li>
-            <li>✓ Visa application support</li>
-            <li>✓ Tax emigration strategy</li>
-          </ul>
-          <a href="https://forms.office.com/e/PWc6s3c035?lang=en" target="_blank" class="pack-btn pack-btn-featured">Get Started →</a>
+          <div class="pack-header"><div class="pack-name">Get Started</div><div class="pack-price">$599</div></div>
+          <div class="pack-desc" style="font-size:12px;">Everything above + legal roadmap + visa support + tax emigration strategy.</div>
+          <a href="https://forms.office.com/e/PWc6s3c035?lang=en" target="_blank" class="pack-btn pack-btn-featured" style="margin-top:8px;">Get Started →</a>
         </div>
 
-        <!-- Pack 4 - Full Legal Service -->
         <div class="pack-card">
-          <div class="pack-header">
-            <div class="pack-name">Full Legal Service</div>
-            <div class="pack-price">$890</div>
-          </div>
-          <div class="pack-desc">For those who know where they're moving and want Wiese Law Firm to handle the legal obstacles end-to-end.</div>
-          <ul class="pack-list">
-            <li>✓ Everything in Get Started</li>
-            <li>✓ 60-min attorney consultation</li>
-            <li>✓ We file residency applications</li>
-            <li>✓ Company setup support</li>
-          </ul>
-          <a href="https://forms.office.com/e/PWc6s3c035?lang=en" target="_blank" class="pack-btn">Get Full Service →</a>
+          <div class="pack-header"><div class="pack-name">Move Now</div><div class="pack-price">$990</div></div>
+          <div class="pack-desc" style="font-size:12px;">Everything above + 60-min attorney + we file residency + company setup.</div>
+          <a href="https://forms.office.com/e/PWc6s3c035?lang=en" target="_blank" class="pack-btn" style="margin-top:8px;">Get Full Service →</a>
         </div>
 
-      </div>
-      <div style="text-align:center;margin-top:16px;">
-        <a href="mailto:post@domicileshift.com" style="font-size:13px;color:var(--text-2);text-decoration:none;">Not sure which pack? <span style="color:var(--accent)">Contact us</span> and we'll advise →</a>
+        <div style="text-align:center;padding-top:4px;">
+          <a href="mailto:post@domicileshift.com" style="font-size:11px;color:var(--text-2);text-decoration:none;">Unsure? <span style="color:var(--accent)">Contact us →</span></a>
+        </div>
       </div>
     </div>
 
-    <div class="results-grid" id="results-grid"></div>
+    <!-- Empty state -->
+    <div id="results-empty" style="display:none;"></div>
 
-    <div style="text-align:center; margin-top:24px;">
+    <!-- Keep cta-block as empty anchor for JS compat -->
+    <div id="cta-block" style="display:none;">
+    </div>
+
+    <div style="text-align:center;margin-top:32px;">
       <button class="btn-restart" onclick="restart()">Start over with different criteria</button>
     </div>
-
-    <div class="nav-row" style="justify-content:flex-start; margin-top:0;">
+    <div class="nav-row" style="justify-content:flex-start;margin-top:0;">
       <button class="btn btn-ghost" onclick="goTo(7)">← Back</button>
     </div>
   </div>
@@ -2448,7 +2425,6 @@ function showWorkResults() {
   const val = document.getElementById('work-country').value;
   if (!val) return;
   document.getElementById('step-0b').classList.remove('active');
-  document.getElementById('progress-section').style.display = 'none';
   document.getElementById('step-8').classList.add('active');
   state.currentStep = 8;
   document.getElementById('live-panel').style.display = 'none';
@@ -2498,7 +2474,10 @@ function showWorkResults() {
       </div>`;
   }).join('');
 
-  document.getElementById('cta-block').style.display = 'block';
+  document.getElementById('results-top').innerHTML = '';
+  document.getElementById('results-rest-label').style.display = 'none';
+  document.getElementById('results-empty').style.display = 'none';
+  document.getElementById('results-split').classList.add('active');
 
   if (j) {
     state.preferredRegion = (['Middle East'].includes(j.region)) ? 'Middle East'
@@ -2845,6 +2824,19 @@ function scoreJurisdiction(j) {
 // ═══════════════════════════════════════════
 //  RESULTS
 // ═══════════════════════════════════════════
+function visaMinHtml(j) {
+  if (!j.investorVisa || !j.investorVisaMin) return '';
+  const col = j.investorVisaMin <= 200000 ? 'low' : j.investorVisaMin <= 750000 ? 'med' : 'high';
+  const label = j.investorVisaMin >= 1000000 ? (j.investorVisaMin/1000000).toFixed(1)+'M' : (j.investorVisaMin/1000)+'k';
+  return '<div class="rt"><div class="rt-label">Visa Min.</div><div class="rt-val '+col+'">$'+label+'</div></div>';
+}
+
+function residencyEaseHtml(j) {
+  if (j.residencyEase === undefined) return '';
+  const col = j.residencyEase >= 8 ? 'zero' : j.residencyEase >= 6 ? 'low' : j.residencyEase >= 4 ? 'med' : 'high';
+  return '<div class="rt"><div class="rt-label">Residency Ease</div><div class="rt-val '+col+'">'+j.residencyEase+'/10</div></div>';
+}
+
 function oecdTreatyHtml(n) {
   const col = n >= 30 ? 'var(--success)' : n >= 15 ? 'var(--accent)' : n >= 5 ? 'var(--warm)' : 'var(--danger)';
   const label = n >= 30 ? 'Extensive treaty network — strong double-taxation protection'
@@ -2971,28 +2963,37 @@ function showResults() {
   });
   scored.sort((a, b) => b._score - a._score);
 
+  const topGrid = document.getElementById('results-top');
   const grid = document.getElementById('results-grid');
   const countEl = document.getElementById('results-count');
 
   if (scored.length === 0) {
+    topGrid.innerHTML = '';
     countEl.innerHTML = '';
-    grid.innerHTML = `
+    grid.innerHTML = '';
+    document.getElementById('results-empty').style.display = 'block';
+    document.getElementById('results-empty').innerHTML = `
       <div class="empty-state">
         <div class="icon">🔍</div>
         <h3>No exact matches found</h3>
         <p>Your criteria are very specific. Try relaxing one or two filters — for example, allowing a small wealth tax can unlock destinations like Switzerland, Liechtenstein, or Belgium.</p>
       </div>`;
+    document.getElementById('results-split').classList.remove('active');
     document.getElementById('cta-block').style.display = 'none';
     return;
   }
 
-  countEl.innerHTML = `Showing <strong>${scored.length} jurisdictions</strong> — top 3 highlighted as best matches`;
+  document.getElementById('results-empty').style.display = 'none';
+  document.getElementById('results-split').classList.add('active');
 
-  grid.innerHTML = scored.map((j, i) => {
-    const isTop = i < 3;
+  const top3 = scored.slice(0, 3);
+  const rest  = scored.slice(3);
+
+  countEl.innerHTML = `<strong style="color:var(--accent)">${scored.length} jurisdiction${scored.length===1?'':'s'}</strong> match your profile — your top picks are below.`;
+
+  const renderCard = (j, i, isTop) => {
     const pct = j._score;
     const style = `style="--pct:${pct * 3.6}deg"`;
-
     const tags = j.tags.map(t => `<span class="tag good">${t}</span>`).join('');
 
     return `
@@ -3023,8 +3024,8 @@ function showResults() {
           <div class="rt"><div class="rt-label">VAT</div>${j.vat !== undefined ? valClass(j.vat) : '<span class="rt-val">—</span>'}</div>
           <div class="rt"><div class="rt-label">Territorial</div>${valClass(j.territorial, 'flag')}</div>
           <div class="rt"><div class="rt-label">Investor Visa</div>${valClass(j.investorVisa, 'flag')}</div>
-          ${j.investorVisa && j.investorVisaMin ? `<div class="rt"><div class="rt-label">Visa Min.</div><div class="rt-val ${j.investorVisaMin <= 200000 ? 'low' : j.investorVisaMin <= 750000 ? 'med' : 'high'}">$${j.investorVisaMin >= 1000000 ? (j.investorVisaMin/1000000).toFixed(1)+'M' : (j.investorVisaMin/1000)+'k'}</div></div>` : ''}
-          ${j.residencyEase !== undefined ? `<div class="rt"><div class="rt-label">Residency Ease</div><div class="rt-val ${j.residencyEase >= 8 ? 'zero' : j.residencyEase >= 6 ? 'low' : j.residencyEase >= 4 ? 'med' : 'high'}">${j.residencyEase}/10</div></div>` : ''}
+          ${visaMinHtml(j)}
+          ${residencyEaseHtml(j)}
         </div>
 
         <div class="result-tags">${tags}</div>
@@ -3036,9 +3037,24 @@ function showResults() {
           Jurisdiction Info
         </button>
       </div>`;
-  }).join('');
+  };
 
+  // Render top 3 prominently
+  topGrid.innerHTML = top3.map((j, i) => renderCard(j, i, true)).join('');
+
+  // Show pack selector
   document.getElementById('cta-block').style.display = 'block';
+
+  // Render remaining matches below packs
+  const restLabel = document.getElementById('results-rest-label');
+  if (rest.length > 0) {
+    restLabel.style.display = 'block';
+    grid.innerHTML = rest.map((j, i) => renderCard(j, i + 3, false)).join('');
+  } else {
+    restLabel.style.display = 'none';
+    grid.innerHTML = '';
+  }
+
   updateLivePanel();
 }
 
@@ -3134,62 +3150,85 @@ function renderWorldMap(scored, allJurisdictions) {
     const drawDots = (p) => {
       dotG.selectAll('*').remove();
       const activeNames = new Set(scored.map(j => j.name));
+      const hasFilters = state.entityType || state.preferredRegion || state.selectedCriteria.size > 0 || state.wealthOk !== null || state.visaOk !== null;
 
-      // Draw all jurisdictions as dim background dots
+      // Draw ALL jurisdictions — eliminated ones show as faded/greyed with an X marker
       all.forEach(j => {
-        if (activeNames.has(j.name)) return; // drawn below
         const coords = JURISDICTION_COORDS[j.name];
         if (!coords) return;
         const [px, py] = p([coords[1], coords[0]]);
         if (isNaN(px) || isNaN(py) || px < -60 || px > W+60 || py < -60 || py > H+60) return;
-        dotG.append('circle').attr('cx', px).attr('cy', py).attr('r', 3)
-          .attr('fill', '#1e5a78').attr('stroke', '#134158').attr('stroke-width', 0.5).attr('opacity', 0.5)
-          .attr('cursor', 'pointer')
-          .on('click', () => openModal(j.name));
-      });
 
-      // Draw active/scored jurisdictions on top
-      scored.forEach((j, i) => {
-        const coords = JURISDICTION_COORDS[j.name];
-        if (!coords) return;
-        const [px, py] = p([coords[1], coords[0]]);
-        if (isNaN(px) || isNaN(py) || px < -60 || px > W+60 || py < -60 || py > H+60) return;
-        const hasScore = j._score !== null && j._score !== undefined;
-        const isTop = hasScore && i < 3;
-        const pct = hasScore ? j._score : null;
-        const r = isTop ? 10 : (hasScore ? 7 : 5);
-        const col = isTop ? '#c9a84c' : (hasScore ? '#E4EAA3' : '#4aa8d8');
-        if (isTop) {
-          dotG.append('circle').attr('cx', px).attr('cy', py).attr('r', r+6)
-            .attr('fill', 'none').attr('stroke', col).attr('stroke-width', 1.5).attr('opacity', 0.35);
+        const isActive = activeNames.has(j.name);
+        const scored_j = scored.find(s => s.name === j.name);
+        const hasScore = scored_j && scored_j._score !== null && scored_j._score !== undefined;
+        const isTop = isActive && hasScore && scored.indexOf(scored_j) < 3;
+
+        if (!isActive && hasFilters) {
+          // Eliminated — show as small faded grey dot with strikethrough ring
+          dotG.append('circle').attr('cx', px).attr('cy', py).attr('r', 5)
+            .attr('fill', '#0a2f40').attr('stroke', '#1e3d50').attr('stroke-width', 1)
+            .attr('opacity', 0.35).attr('cursor', 'pointer')
+            .on('click', () => openModal(j.name))
+            .on('mouseover', (event) => {
+              tooltip.style.display = 'block';
+              tooltip.innerHTML = `<div style="font-size:14px;margin-bottom:3px;opacity:0.6">${j.flag} <span style="text-decoration:line-through;color:var(--text-2)">${j.name}</span></div>
+                <div style="font-size:11px;color:var(--danger)">Filtered out by your criteria</div>`;
+            }).on('mousemove', (event) => {
+              const rect = wrap.getBoundingClientRect();
+              let tx = event.clientX - rect.left + 12;
+              let ty = event.clientY - rect.top - 40;
+              if (tx + 160 > W) tx -= 172;
+              tooltip.style.left = tx + 'px'; tooltip.style.top = ty + 'px';
+            }).on('mouseout', () => { tooltip.style.display = 'none'; });
+          // Small X lines
+          const xs = 3;
+          dotG.append('line').attr('x1', px-xs).attr('y1', py-xs).attr('x2', px+xs).attr('y2', py+xs)
+            .attr('stroke', '#c05050').attr('stroke-width', 1).attr('opacity', 0.4).attr('pointer-events', 'none');
+          dotG.append('line').attr('x1', px+xs).attr('y1', py-xs).attr('x2', px-xs).attr('y2', py+xs)
+            .attr('stroke', '#c05050').attr('stroke-width', 1).attr('opacity', 0.4).attr('pointer-events', 'none');
+        } else if (isActive) {
+          // Active jurisdiction
+          const pct = hasScore ? scored_j._score : null;
+          const r = isTop ? 10 : (hasScore ? 7 : 5);
+          const col = isTop ? '#c9a84c' : (hasScore ? '#E4EAA3' : '#4aa8d8');
+          if (isTop) {
+            dotG.append('circle').attr('cx', px).attr('cy', py).attr('r', r+6)
+              .attr('fill', 'none').attr('stroke', col).attr('stroke-width', 1.5).attr('opacity', 0.35);
+          }
+          const dot = dotG.append('circle').attr('cx', px).attr('cy', py).attr('r', r)
+            .attr('fill', col).attr('stroke', '#041D27').attr('stroke-width', 1.5).attr('cursor', 'pointer').attr('opacity', 0.9);
+          if (hasScore) {
+            dotG.append('text').attr('x', px).attr('y', py+4).attr('text-anchor', 'middle')
+              .attr('font-size', isTop ? '8px' : '7px').attr('font-weight', '700').attr('fill', '#041D27')
+              .attr('pointer-events', 'none').text(pct+'%');
+          }
+          if (isTop) {
+            dotG.append('text').attr('x', px).attr('y', py-r-5).attr('text-anchor', 'middle')
+              .attr('font-size', '9px').attr('font-weight', '700').attr('fill', col)
+              .attr('pointer-events', 'none').text(j.name);
+          }
+          dot.on('mouseover', (event) => {
+            tooltip.style.display = 'block';
+            tooltip.innerHTML = `<div style="font-size:16px;margin-bottom:4px">${j.flag}</div>
+              <div style="font-weight:700;color:var(--text-1);margin-bottom:2px">${j.name}</div>
+              <div style="color:var(--text-2);font-size:11px;margin-bottom:6px">${j.region}</div>
+              ${hasScore ? `<div style="color:var(--accent);font-weight:700">${pct}% match</div>` : ''}
+              <div style="font-size:11px;color:var(--text-2);margin-top:4px">Income: ${j.income}% · CGT: ${j.cgt}%</div>`;
+          }).on('mousemove', (event) => {
+            const rect = wrap.getBoundingClientRect();
+            let tx = event.clientX - rect.left + 12;
+            let ty = event.clientY - rect.top - 40;
+            if (tx + 160 > W) tx -= 172;
+            tooltip.style.left = tx + 'px'; tooltip.style.top = ty + 'px';
+          }).on('mouseout', () => { tooltip.style.display = 'none'; })
+            .on('click', () => openModal(j.name));
+        } else {
+          // No filters yet — show as neutral dot
+          dotG.append('circle').attr('cx', px).attr('cy', py).attr('r', 4)
+            .attr('fill', '#1e5a78').attr('stroke', '#134158').attr('stroke-width', 0.5).attr('opacity', 0.6)
+            .attr('cursor', 'pointer').on('click', () => openModal(j.name));
         }
-        const dot = dotG.append('circle').attr('cx', px).attr('cy', py).attr('r', r)
-          .attr('fill', col).attr('stroke', '#041D27').attr('stroke-width', 1.5).attr('cursor', 'pointer').attr('opacity', 0.9);
-        if (hasScore) {
-          dotG.append('text').attr('x', px).attr('y', py+4).attr('text-anchor', 'middle')
-            .attr('font-size', isTop ? '8px' : '7px').attr('font-weight', '700').attr('fill', '#041D27')
-            .attr('pointer-events', 'none').text(pct+'%');
-        }
-        if (isTop) {
-          dotG.append('text').attr('x', px).attr('y', py-r-5).attr('text-anchor', 'middle')
-            .attr('font-size', '9px').attr('font-weight', '700').attr('fill', col)
-            .attr('pointer-events', 'none').text(j.name);
-        }
-        dot.on('mouseover', (event) => {
-          tooltip.style.display = 'block';
-          tooltip.innerHTML = `<div style="font-size:16px;margin-bottom:4px">${j.flag}</div>
-            <div style="font-weight:700;color:var(--text-1);margin-bottom:2px">${j.name}</div>
-            <div style="color:var(--text-2);font-size:11px;margin-bottom:6px">${j.region}</div>
-            ${hasScore ? `<div style="color:var(--accent);font-weight:700">${pct}% match</div>` : ''}
-            <div style="font-size:11px;color:var(--text-2);margin-top:4px">Income: ${j.income}% · CGT: ${j.cgt}%</div>`;
-        }).on('mousemove', (event) => {
-          const rect = wrap.getBoundingClientRect();
-          let tx = event.clientX - rect.left + 12;
-          let ty = event.clientY - rect.top - 40;
-          if (tx + 160 > W) tx -= 172;
-          tooltip.style.left = tx + 'px'; tooltip.style.top = ty + 'px';
-        }).on('mouseout', () => { tooltip.style.display = 'none'; })
-          .on('click', () => openModal(j.name));
       });
     };
 
@@ -3298,6 +3337,8 @@ function restart() {
   state.visaOk = null;
   document.getElementById('current-country').value = '';
   document.getElementById('current-tax-display').classList.remove('visible');
+  document.getElementById('results-split').classList.remove('active');
+  document.getElementById('results-empty').style.display = 'none';
   document.getElementById('step1-next').disabled = true;
   document.getElementById('step1-next').classList.remove('ready');
   document.getElementById('step2-next').disabled = true;
