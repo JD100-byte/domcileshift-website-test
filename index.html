@@ -66,7 +66,7 @@
       z-index: 1;
       max-width: 1240px;
       margin: 0 auto;
-      padding: 0 24px 80px;
+      padding: 0 24px 40px;
     }
 
     /* ── SPLIT LAYOUT (wizard + live panel) ── */
@@ -134,8 +134,8 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 4px;
-      padding: 10px 6px;
+      gap: 3px;
+      padding: 8px 4px;
       border-radius: var(--radius);
       cursor: pointer;
       transition: all 0.2s;
@@ -143,22 +143,31 @@
       background: var(--card);
       text-align: center;
       animation: fadeUp 0.3s ease both;
+      position: relative;
+      overflow: hidden;
     }
-    .lp-item:hover { background: var(--card-hover); border-color: var(--accent); }
-    .lp-flag { font-size: 22px; line-height: 1; }
+    .lp-item::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--lp-score-col, transparent);
+      border-radius: 0 0 var(--radius) var(--radius);
+    }
+    .lp-item:hover { border-color: var(--accent); }
+    .lp-flag { font-size: 20px; line-height: 1; }
     .lp-name {
       font-size: 9px;
-      font-weight: 400;
+      font-weight: 500;
       color: var(--text-2);
       line-height: 1.2;
       word-break: break-word;
     }
     .lp-score {
-      font-size: 10px;
-      font-weight: 700;
-      color: var(--text-2);
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--lp-score-col, var(--text-2));
     }
-    .lp-score.has-score { color: var(--accent); }
 
     .live-panel-empty {
       padding: 32px 20px;
@@ -314,12 +323,12 @@
     /* ── STEP PANEL ── */
     .step {
       display: none;
-      animation: fadeUp 0.4s ease both;
+      animation: fadeUp 0.3s ease both;
     }
     .step.active { display: block; }
 
     .step-header {
-      margin-bottom: 32px;
+      margin-bottom: 20px;
     }
     .step-num {
       font-size: 11px;
@@ -327,19 +336,19 @@
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--accent);
-      margin-bottom: 10px;
+      margin-bottom: 6px;
       display: block;
     }
     .step-header h2 {
-      font-size: clamp(24px, 4vw, 34px);
+      font-size: clamp(20px, 3vw, 28px);
       font-weight: 300;
       color: var(--text-1);
-      margin-bottom: 10px;
+      margin-bottom: 6px;
     }
     .step-header p {
-      font-size: 15px;
+      font-size: 13px;
       color: var(--text-2);
-      line-height: 1.6;
+      line-height: 1.5;
     }
 
     /* ── CURRENT TAX DISPLAY ── */
@@ -423,14 +432,14 @@
     .entity-cards {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 16px;
+      gap: 12px;
       margin-top: 8px;
     }
     .entity-card {
       background: var(--surface);
       border: 2px solid var(--border);
       border-radius: var(--radius-lg);
-      padding: 28px 24px;
+      padding: 18px 16px;
       cursor: pointer;
       transition: all var(--transition);
       text-align: center;
@@ -443,15 +452,15 @@
       border-color: var(--accent);
       background: rgba(228,234,163,0.08);
     }
-    .entity-card-icon { font-size: 36px; margin-bottom: 12px; display: block; }
+    .entity-card-icon { font-size: 28px; margin-bottom: 8px; display: block; }
     .entity-card-title {
       font-family: 'Outfit', sans-serif;
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 600;
       color: var(--text-1);
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
-    .entity-card-desc { font-size: 13px; color: var(--text-2); line-height: 1.5; }
+    .entity-card-desc { font-size: 12px; color: var(--text-2); line-height: 1.4; }
 
     /* ── TOGGLE CRITERIA ── */
     .criteria-grid {
@@ -464,7 +473,7 @@
       background: var(--surface);
       border: 2px solid var(--border);
       border-radius: var(--radius);
-      padding: 18px 20px;
+      padding: 12px 16px;
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -516,7 +525,7 @@
       background: var(--surface);
       border: 2px solid var(--border);
       border-radius: var(--radius-lg);
-      padding: 22px 24px;
+      padding: 16px 18px;
       box-shadow: 0 2px 12px rgba(0,0,0,0.18);
       transition: border-color var(--transition);
     }
@@ -568,14 +577,14 @@
     .nav-row {
       display: flex;
       gap: 12px;
-      margin-top: 40px;
+      margin-top: 20px;
       justify-content: flex-end;
     }
     .btn {
-      padding: 14px 32px;
+      padding: 11px 26px;
       border-radius: var(--radius);
       font-family: 'Manrope', sans-serif;
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 600;
       cursor: pointer;
       transition: all var(--transition);
@@ -654,39 +663,22 @@
     }
     .result-region { font-size: 12px; color: var(--text-2); margin-top: 2px; }
 
-    .score-badge {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      flex-shrink: 0;
-    }
+    .score-badge { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; gap: 6px; }
     .score-ring {
-      width: 64px;
-      height: 64px;
+      width: 72px;
+      height: 72px;
       border-radius: 50%;
-      background: conic-gradient(var(--accent) var(--pct, 0%), var(--card) 0%);
+      border: 3px solid var(--score-col, var(--accent));
       display: flex;
       align-items: center;
       justify-content: center;
-      position: relative;
-    }
-    .score-ring::before {
-      content: '';
-      width: 50px;
-      height: 50px;
-      background: var(--surface);
-      border-radius: 50%;
-      position: absolute;
-    }
-    .result-card.top-pick .score-ring {
-      background: conic-gradient(var(--gold) var(--pct, 0%), var(--card) 0%);
+      background: color-mix(in srgb, var(--score-col, var(--accent)) 10%, var(--surface));
     }
     .score-num {
-      position: relative;
-      z-index: 1;
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--text-1);
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--score-col, var(--accent));
+      letter-spacing: -0.02em;
     }
     .top-badge {
       display: inline-flex;
@@ -1464,10 +1456,7 @@
     </div>
 
     <div class="nav-row">
-      <button class="btn btn-info" style="margin-top:0" onclick="openBrowseModal()">
-        <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/><line x1="8" y1="7" x2="8" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="8" cy="5" r="0.75" fill="currentColor"/></svg>
-        Browse Jurisdictions
-      </button>
+      <button class="btn btn-ghost" onclick="restart()">← Back</button>
       <button class="btn btn-ghost" style="font-size:12px;padding:8px 14px;opacity:0.75" onclick="goTo('0b')">💼 Moving for work?</button>
       <button class="btn btn-primary" id="step1-next" disabled onclick="goTo(2)">Continue →</button>
     </div>
@@ -1532,6 +1521,7 @@
 
     <div class="nav-row">
       <button class="btn btn-ghost" onclick="goTo(1)">← Back</button>
+      <button class="btn btn-ghost" onclick="goTo(1)">← Back</button>
       <button class="btn btn-primary" id="step2-next" disabled onclick="goTo(3)">Continue →</button>
     </div>
   </div>
@@ -1572,6 +1562,7 @@
     <div class="nav-row">
       <button class="btn btn-ghost" onclick="goTo(2)">← Back</button>
       <button class="btn btn-ghost" onclick="selectRegion(null)">No preference — show all →</button>
+      <button class="btn btn-ghost" onclick="goTo(2)">← Back</button>
       <button class="btn btn-primary" id="step3-next" disabled onclick="goTo(4)">Continue →</button>
     </div>
   </div>
@@ -1583,25 +1574,45 @@
     <div class="step-header">
       <span class="step-num">Step 4 of 8</span>
       <h2>What is driving your move?</h2>
-      <p>This helps us weight your results — tax-driven moves prioritise low-tax jurisdictions, while lifestyle moves also consider quality of life, language, and ease of entry.</p>
+      <p>Slide towards what matters most. This weights your results accordingly.</p>
     </div>
 
-    <div class="entity-cards">
-      <div class="entity-card" id="motiv-tax" onclick="selectMotivation('tax')">
-        <span class="entity-card-icon">💰</span>
-        <div class="entity-card-title">Primarily tax</div>
-        <div class="entity-card-desc">Reducing my tax burden is the main reason I'm considering a move.</div>
+    <div style="background:var(--surface);border:2px solid var(--border);border-radius:var(--radius-lg);padding:28px 24px;">
+
+      <!-- Labels -->
+      <div style="display:flex;justify-content:space-between;margin-bottom:12px;">
+        <div style="text-align:left;">
+          <div style="font-size:22px;margin-bottom:4px;">💰</div>
+          <div style="font-size:14px;font-weight:700;color:var(--accent)">Tax</div>
+          <div style="font-size:11px;color:var(--text-2);max-width:120px;">Minimise taxes above all</div>
+        </div>
+        <div id="motiv-label" style="text-align:center;padding:0 16px;">
+          <div style="font-size:13px;font-weight:600;color:var(--text-1)" id="motiv-label-text">Move the slider</div>
+          <div style="font-size:11px;color:var(--text-2);margin-top:2px;" id="motiv-label-sub">to set your priority</div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:22px;margin-bottom:4px;">🌴</div>
+          <div style="font-size:14px;font-weight:700;color:var(--accent)">Lifestyle</div>
+          <div style="font-size:11px;color:var(--text-2);max-width:120px;text-align:right;">Climate, happiness &amp; quality of life</div>
+        </div>
       </div>
-      <div class="entity-card" id="motiv-lifestyle" onclick="selectMotivation('lifestyle')">
-        <span class="entity-card-icon">🌴</span>
-        <div class="entity-card-title">Primarily lifestyle</div>
-        <div class="entity-card-desc">I want a better quality of life, new environment, or fresh start — taxes are secondary.</div>
+
+      <!-- Slider track with gradient -->
+      <div style="position:relative;margin:8px 0 6px;">
+        <div style="height:8px;border-radius:4px;background:linear-gradient(90deg, var(--accent) 0%, rgba(228,234,163,0.3) 50%, #4aa8d8 100%);margin-bottom:4px;"></div>
+        <input type="range" id="motiv-slider" class="pref-slider"
+          min="0" max="100" step="5" value="50"
+          style="position:absolute;top:-6px;left:0;width:100%;accent-color:var(--text-1);background:transparent;"
+          oninput="updateMotivSlider(this.value)">
       </div>
-      <div class="entity-card" id="motiv-both" onclick="selectMotivation('both')">
-        <span class="entity-card-icon">⚖️</span>
-        <div class="entity-card-title">Both</div>
-        <div class="entity-card-desc">I want lower taxes AND a better lifestyle — both matter equally to my decision.</div>
+
+      <!-- Scale markers -->
+      <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text-2);margin-top:18px;">
+        <span>Pure Tax</span>
+        <span>Balanced</span>
+        <span>Pure Lifestyle</span>
       </div>
+
     </div>
 
     <div class="nav-row">
@@ -1625,6 +1636,7 @@
     </div>
 
     <div class="nav-row">
+      <button class="btn btn-ghost" onclick="goTo(4)">← Back</button>
       <button class="btn btn-ghost" onclick="goTo(4)">← Back</button>
       <button class="btn btn-primary" id="step5-next" disabled onclick="goTo('5b')">Continue →</button>
     </div>
@@ -1686,6 +1698,7 @@
 
     <div class="nav-row">
       <button class="btn btn-ghost" onclick="goTo('5b')">← Back</button>
+      <button class="btn btn-ghost" onclick="goTo('5b')">← Back</button>
       <button class="btn btn-primary" id="step6-next" disabled onclick="goTo(7)">Continue →</button>
     </div>
   </div>
@@ -1713,6 +1726,7 @@
     </div>
 
     <div class="nav-row">
+      <button class="btn btn-ghost" onclick="goTo(6)">← Back</button>
       <button class="btn btn-ghost" onclick="goTo(6)">← Back</button>
       <button class="btn btn-primary" id="step7-next" disabled onclick="showResults()">See My Matches →</button>
     </div>
@@ -1805,7 +1819,7 @@
 
       <!-- Live map preview -->
       <div id="world-map-wrap" style="position:relative;width:100%;background:var(--bg);border-bottom:1px solid var(--border);overflow:hidden;margin-bottom:12px;flex-shrink:0;">
-        <svg id="world-map" style="width:100%;height:320px;display:block;"></svg>
+        <svg id="world-map" style="width:100%;height:220px;display:block;"></svg>
         <div id="map-tooltip" style="position:absolute;pointer-events:none;display:none;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:8px 12px;font-size:11px;color:var(--text-1);min-width:120px;box-shadow:0 4px 16px rgba(0,0,0,0.3);z-index:10;"></div>
       </div>
 
@@ -1899,7 +1913,6 @@ const CRITERIA = [
   { id: 'inheritance', label: 'Inheritance Tax',     sub: 'No estate or succession tax',     personal: true,  corporate: false },
   { id: 'social',      label: 'Social Security',     sub: 'Low mandatory contributions',     personal: true,  corporate: true  },
   { id: 'territorial', label: 'Territorial System',  sub: 'Only taxed on local-source income — foreign income is tax free',personal: true, corporate: true  },
-  { id: 'visa',        label: 'Investor Visa',       sub: 'Clear residency-by-investment path',personal: true,corporate: true  },
 ];
 
 const JURISDICTIONS = [
@@ -1908,7 +1921,9 @@ const JURISDICTIONS = [
     income: 0, cgt: 0, corporate: 9, wealth: 0, inheritance: 0, social: 0, territorial: true,
     vat: 5, investorVisaMin: 205000, residencyEase: 7, exitTaxEase: 9, treatyRegions: ['Middle East','Asia','Western Europe'],
     oecdTreaties: 29,
-    travelEase: 8, familyFriendly: 6, socialServices: 4, costOfLiving: 6,
+    happinessScore: 6.7,
+    avgTemp: 28,
+    travelEase: 9, familyFriendly: 7, socialServices: 4, costOfLiving: 5,
     englishSpeaking: true, investorVisa: true, personalFriendly: true, corporateFriendly: true,
     tags: ['No income tax', 'No CGT', '9% corporate', 'Territorial'],
     note: 'Federal UAE — no personal income tax, 9% corporate from 2023.',
@@ -1918,7 +1933,9 @@ const JURISDICTIONS = [
     income: 0, cgt: 0, corporate: 0, wealth: 0, inheritance: 0, social: 0, territorial: true,
     vat: 5, investorVisaMin: 205000, residencyEase: 8, exitTaxEase: 9, treatyRegions: ['Middle East','Asia','Western Europe'],
     oecdTreaties: 29,
-    travelEase: 9, familyFriendly: 7, socialServices: 4, costOfLiving: 6,
+    happinessScore: 6.7,
+    avgTemp: 28,
+    travelEase: 10, familyFriendly: 7, socialServices: 4, costOfLiving: 4,
     englishSpeaking: true, investorVisa: true, personalFriendly: true, corporateFriendly: true,
     tags: ['Zero income tax', 'Zero CGT', 'Free zones available', 'Investor visa'],
     note: 'Dubai free zones offer 0% corporate tax for qualifying entities.',
@@ -1928,8 +1945,10 @@ const JURISDICTIONS = [
     income: 0, cgt: 0, corporate: 0, wealth: 0, inheritance: 0, social: 13.8, territorial: true,
     vat: 20, investorVisaMin: 500000, residencyEase: 4, exitTaxEase: 8, treatyRegions: ['Western Europe','Middle East'],
     oecdTreaties: 7,
-    travelEase: 9, familyFriendly: 8, socialServices: 7, costOfLiving: 2,
-    englishSpeaking: false, investorVisa: true, personalFriendly: true, corporateFriendly: false,
+    happinessScore: 7.5,
+    avgTemp: 16,
+    travelEase: 7, familyFriendly: 8, socialServices: 7, costOfLiving: 1,
+    englishSpeaking: false, investorVisa: true, personalFriendly: true, corporateFriendly: true,
     tags: ['Zero income tax', 'No CGT', 'High cost of living'],
     note: 'No personal income tax. Residence requires €500k+ in bank.',
   },
@@ -1938,7 +1957,9 @@ const JURISDICTIONS = [
     income: 0, cgt: 0, corporate: 0, wealth: 0, inheritance: 0, social: 0, territorial: true,
     vat: 0, investorVisaMin: 1000000, residencyEase: 5, exitTaxEase: 9, treatyRegions: ['North America','Caribbean'],
     oecdTreaties: 1,
-    travelEase: 7, familyFriendly: 7, socialServices: 5, costOfLiving: 3,
+    happinessScore: 6.8,
+    avgTemp: 28,
+    travelEase: 5, familyFriendly: 7, socialServices: 4, costOfLiving: 2,
     englishSpeaking: true, investorVisa: true, personalFriendly: true, corporateFriendly: true,
     tags: ['Fully tax-free', 'No reporting requirements', 'Major financial centre'],
     note: 'No direct taxation of any kind. Popular for funds and holding companies.',
@@ -1948,7 +1969,9 @@ const JURISDICTIONS = [
     income: 0, cgt: 0, corporate: 0, wealth: 0, inheritance: 0, social: 3.9, territorial: true,
     vat: 10, investorVisaMin: 750000, residencyEase: 6, exitTaxEase: 9, treatyRegions: ['North America','Caribbean'],
     oecdTreaties: 2,
-    travelEase: 7, familyFriendly: 6, socialServices: 4, costOfLiving: 4,
+    happinessScore: 6.2,
+    avgTemp: 27,
+    travelEase: 5, familyFriendly: 6, socialServices: 4, costOfLiving: 3,
     englishSpeaking: true, investorVisa: true, personalFriendly: true, corporateFriendly: true,
     tags: ['Zero income tax', 'No CGT', 'English-speaking', 'Investor residency'],
     note: 'No direct taxes. Permanent residency available from $750k property investment.',
@@ -1958,7 +1981,9 @@ const JURISDICTIONS = [
     income: 0, cgt: 0, corporate: 0, wealth: 0, inheritance: 0, social: 10.5, territorial: true,
     vat: 0, investorVisaMin: 2500000, residencyEase: 4, exitTaxEase: 9, treatyRegions: ['North America'],
     oecdTreaties: 2,
-    travelEase: 7, familyFriendly: 7, socialServices: 6, costOfLiving: 2,
+    happinessScore: 7.0,
+    avgTemp: 21,
+    travelEase: 4, familyFriendly: 7, socialServices: 5, costOfLiving: 1,
     englishSpeaking: true, investorVisa: true, personalFriendly: true, corporateFriendly: true,
     tags: ['No income tax', 'Insurance hub', 'English common law'],
     note: 'No income, corporate or capital gains tax. Leading reinsurance centre.',
@@ -1968,7 +1993,9 @@ const JURISDICTIONS = [
     income: 0, cgt: 10, corporate: 25, wealth: 0, inheritance: 0, social: 9.75, territorial: true,
     vat: 7, investorVisaMin: 300000, residencyEase: 8, exitTaxEase: 9, treatyRegions: ['North America','South America','Caribbean'],
     oecdTreaties: 14,
-    travelEase: 7, familyFriendly: 6, socialServices: 4, costOfLiving: 8,
+    happinessScore: 6.4,
+    avgTemp: 27,
+    travelEase: 7, familyFriendly: 5, socialServices: 5, costOfLiving: 8,
     englishSpeaking: false, investorVisa: true, personalFriendly: true, corporateFriendly: true,
     tags: ['Territorial system', 'No foreign income tax', 'Friendly Nations Visa'],
     note: 'Strict territorial taxation — foreign-source income is never taxed.',
@@ -1978,7 +2005,9 @@ const JURISDICTIONS = [
     income: 35, cgt: 0, corporate: 5, wealth: 0, inheritance: 0, social: 10, territorial: true,
     vat: 18, investorVisaMin: 150000, residencyEase: 7, exitTaxEase: 7, treatyRegions: ['Western Europe','Middle East','Africa'],
     oecdTreaties: 35,
-    travelEase: 8, familyFriendly: 8, socialServices: 7, costOfLiving: 7,
+    happinessScore: 6.7,
+    avgTemp: 19,
+    travelEase: 8, familyFriendly: 8, socialServices: 8, costOfLiving: 7,
     englishSpeaking: true, investorVisa: true, personalFriendly: true, corporateFriendly: true,
     tags: ['5% effective corporate', 'EU member', 'Non-dom available', 'English-speaking'],
     note: 'Malta\'s full imputation system can reduce effective corporate tax to 5%.',
@@ -1988,7 +2017,9 @@ const JURISDICTIONS = [
     income: 35, cgt: 0, corporate: 12.5, wealth: 0, inheritance: 0, social: 8.3, territorial: false,
     vat: 19, investorVisaMin: 300000, residencyEase: 7, exitTaxEase: 7, treatyRegions: ['Western Europe','Middle East','Eastern Europe'],
     oecdTreaties: 34,
-    travelEase: 8, familyFriendly: 8, socialServices: 6, costOfLiving: 8,
+    happinessScore: 6.3,
+    avgTemp: 20,
+    travelEase: 7, familyFriendly: 8, socialServices: 7, costOfLiving: 7,
     englishSpeaking: true, investorVisa: true, personalFriendly: true, corporateFriendly: true,
     tags: ['12.5% corporate', 'No CGT on shares', 'EU member', 'Non-dom regime'],
     note: 'No CGT on disposal of shares. Non-dom regime available for foreign dividends.',
@@ -1998,8 +2029,10 @@ const JURISDICTIONS = [
     income: 20, cgt: 28, corporate: 21, wealth: 0, inheritance: 10, social: 11, territorial: false,
     vat: 23, investorVisaMin: 250000, residencyEase: 7, exitTaxEase: 6, treatyRegions: ['Western Europe','South America','Africa'],
     oecdTreaties: 36,
-    travelEase: 9, familyFriendly: 9, socialServices: 7, costOfLiving: 8,
-    englishSpeaking: false, investorVisa: true, personalFriendly: true, corporateFriendly: false,
+    happinessScore: 6.1,
+    avgTemp: 18,
+    travelEase: 9, familyFriendly: 9, socialServices: 7, costOfLiving: 7,
+    englishSpeaking: false, investorVisa: true, personalFriendly: true, corporateFriendly: true,
     tags: ['NHR 20% flat rate', 'Golden Visa', 'EU member', 'Quality of life'],
     note: 'NHR regime: flat 20% on Portuguese-source income for 10 years. Golden Visa from €250k.',
   },
@@ -2008,7 +2041,9 @@ const JURISDICTIONS = [
     income: 7, cgt: 26, corporate: 24, wealth: 0, inheritance: 0, social: 9.49, territorial: true,
     vat: 22, investorVisaMin: 500000, residencyEase: 6, exitTaxEase: 6, treatyRegions: ['Western Europe','North America','Middle East'],
     oecdTreaties: 37,
-    travelEase: 9, familyFriendly: 8, socialServices: 7, costOfLiving: 6,
+    happinessScore: 6.4,
+    avgTemp: 13,
+    travelEase: 9, familyFriendly: 8, socialServices: 7, costOfLiving: 5,
     englishSpeaking: false, investorVisa: true, personalFriendly: true, corporateFriendly: true,
     tags: ['Flat 7% regime', 'Non-dom regime', 'Milan financial hub', 'Investor visa'],
     note: 'Italy\'s flat-tax regime: fixed €100k annual tax on all foreign income. Milan is Italy\'s financial capital.',
@@ -2018,7 +2053,9 @@ const JURISDICTIONS = [
     income: 20, cgt: 0, corporate: 0, wealth: 0, inheritance: 0, social: 11, territorial: false,
     vat: 20, investorVisaMin: 0, residencyEase: 6, exitTaxEase: 8, treatyRegions: ['Western Europe','North America'],
     oecdTreaties: 10,
-    travelEase: 7, familyFriendly: 8, socialServices: 8, costOfLiving: 6,
+    happinessScore: 7.5,
+    avgTemp: 10,
+    travelEase: 4, familyFriendly: 8, socialServices: 8, costOfLiving: 5,
     englishSpeaking: true, investorVisa: false, personalFriendly: true, corporateFriendly: true,
     tags: ['0% corporate', 'No CGT', 'Crown dependency', 'Stable jurisdiction'],
     note: '0% corporate tax (except banking). No capital gains tax.',
@@ -2028,7 +2065,9 @@ const JURISDICTIONS = [
     income: 20, cgt: 0, corporate: 0, wealth: 0, inheritance: 0, social: 6, territorial: false,
     vat: 5, investorVisaMin: 0, residencyEase: 4, exitTaxEase: 8, treatyRegions: ['Western Europe','North America'],
     oecdTreaties: 9,
-    travelEase: 7, familyFriendly: 8, socialServices: 8, costOfLiving: 4,
+    happinessScore: 7.5,
+    avgTemp: 11,
+    travelEase: 4, familyFriendly: 8, socialServices: 7, costOfLiving: 3,
     englishSpeaking: true, investorVisa: false, personalFriendly: true, corporateFriendly: true,
     tags: ['0% corporate', 'No CGT', 'Finance centre', 'Restricted residency'],
     note: '0% corporate tax on most activities. Residency is tightly controlled.',
@@ -2038,7 +2077,9 @@ const JURISDICTIONS = [
     income: 20, cgt: 0, corporate: 0, wealth: 0, inheritance: 0, social: 6.5, territorial: false,
     vat: 0, investorVisaMin: 0, residencyEase: 4, exitTaxEase: 8, treatyRegions: ['Western Europe','North America'],
     oecdTreaties: 8,
-    travelEase: 7, familyFriendly: 8, socialServices: 8, costOfLiving: 4,
+    happinessScore: 7.5,
+    avgTemp: 11,
+    travelEase: 3, familyFriendly: 8, socialServices: 7, costOfLiving: 3,
     englishSpeaking: true, investorVisa: false, personalFriendly: true, corporateFriendly: true,
     tags: ['0% corporate', 'No CGT', 'No VAT', 'Finance centre'],
     note: '0% corporate tax. No VAT. Residency is restricted and competitive.',
@@ -2048,7 +2089,9 @@ const JURISDICTIONS = [
     income: 22, cgt: 0, corporate: 17, wealth: 0, inheritance: 0, social: 17, territorial: true,
     vat: 9, investorVisaMin: 2500000, residencyEase: 6, exitTaxEase: 9, treatyRegions: ['Asia','Middle East','Western Europe'],
     oecdTreaties: 32,
-    travelEase: 10, familyFriendly: 9, socialServices: 7, costOfLiving: 4,
+    happinessScore: 6.5,
+    avgTemp: 27,
+    travelEase: 10, familyFriendly: 9, socialServices: 6, costOfLiving: 3,
     englishSpeaking: true, investorVisa: true, personalFriendly: true, corporateFriendly: true,
     tags: ['Territorial', 'No CGT', 'Global financial hub', 'English-speaking'],
     note: 'Territorial system — foreign income not remitted is not taxed.',
@@ -2058,7 +2101,9 @@ const JURISDICTIONS = [
     income: 15, cgt: 0, corporate: 16.5, wealth: 0, inheritance: 0, social: 5, territorial: true,
     vat: 0, investorVisaMin: 2500000, residencyEase: 5, exitTaxEase: 9, treatyRegions: ['Asia','Middle East'],
     oecdTreaties: 22,
-    travelEase: 9, familyFriendly: 7, socialServices: 6, costOfLiving: 3,
+    happinessScore: 5.6,
+    avgTemp: 23,
+    travelEase: 9, familyFriendly: 7, socialServices: 5, costOfLiving: 2,
     englishSpeaking: true, investorVisa: true, personalFriendly: true, corporateFriendly: true,
     tags: ['Territorial', 'No CGT', 'No VAT', 'Asia financial hub'],
     note: 'Territorial system. Offshore profits not taxable.',
@@ -2068,7 +2113,9 @@ const JURISDICTIONS = [
     income: 22.4, cgt: 0, corporate: 12.5, wealth: 0.89, inheritance: 0, social: 4.8, territorial: false,
     vat: 8.1, investorVisaMin: 0, residencyEase: 3, exitTaxEase: 7, treatyRegions: ['Central Europe','Western Europe'],
     oecdTreaties: 12,
-    travelEase: 8, familyFriendly: 9, socialServices: 9, costOfLiving: 3,
+    happinessScore: 8.0,
+    avgTemp: 9,
+    travelEase: 7, familyFriendly: 9, socialServices: 9, costOfLiving: 2,
     englishSpeaking: false, investorVisa: false, personalFriendly: true, corporateFriendly: true,
     tags: ['Low corporate tax', 'No CGT', 'EEA member', 'Stable'],
     note: 'Very stable jurisdiction with strong banking secrecy traditions.',
@@ -2078,8 +2125,10 @@ const JURISDICTIONS = [
     income: 42, cgt: 0, corporate: 17, wealth: 0.5, inheritance: 0, social: 12.1, territorial: false,
     vat: 17, investorVisaMin: 500000, residencyEase: 6, exitTaxEase: 6, treatyRegions: ['Western Europe','North America','Asia'],
     oecdTreaties: 38,
-    travelEase: 9, familyFriendly: 9, socialServices: 9, costOfLiving: 4,
-    englishSpeaking: false, investorVisa: true, personalFriendly: false, corporateFriendly: true,
+    happinessScore: 7.1,
+    avgTemp: 10,
+    travelEase: 8, familyFriendly: 9, socialServices: 9, costOfLiving: 3,
+    englishSpeaking: false, investorVisa: true, personalFriendly: true, corporateFriendly: true,
     tags: ['EU holding hub', 'Lowest EU VAT', 'Fund jurisdiction', 'Treaty network'],
     note: 'Leading EU fund and holding jurisdiction. Strong treaty network.',
   },
@@ -2088,7 +2137,9 @@ const JURISDICTIONS = [
     income: 22.5, cgt: 0, corporate: 14, wealth: 0.7, inheritance: 0, social: 5.3, territorial: false,
     vat: 8.1, investorVisaMin: 400000, residencyEase: 5, exitTaxEase: 6, treatyRegions: ['Western Europe','North America','Asia','Middle East'],
     oecdTreaties: 38,
-    travelEase: 10, familyFriendly: 10, socialServices: 9, costOfLiving: 2,
+    happinessScore: 7.9,
+    avgTemp: 9,
+    travelEase: 10, familyFriendly: 10, socialServices: 7, costOfLiving: 2,
     englishSpeaking: false, investorVisa: true, personalFriendly: true, corporateFriendly: true,
     tags: ['Lump sum taxation', 'No CGT', 'Low corporate', 'Wealth tax exists'],
     note: 'Lump sum taxation available for non-working foreigners from ~CHF 400k/yr.',
@@ -2098,7 +2149,9 @@ const JURISDICTIONS = [
     income: 0, cgt: 0, corporate: 0, wealth: 0, inheritance: 0, social: 7, territorial: true,
     vat: 15, investorVisaMin: 100000, residencyEase: 8, exitTaxEase: 9, treatyRegions: ['Caribbean','North America'],
     oecdTreaties: 3,
-    travelEase: 7, familyFriendly: 6, socialServices: 4, costOfLiving: 7,
+    happinessScore: 6.2,
+    avgTemp: 27,
+    travelEase: 5, familyFriendly: 6, socialServices: 4, costOfLiving: 4,
     englishSpeaking: true, investorVisa: true, personalFriendly: true, corporateFriendly: true,
     tags: ['No income tax', 'CBI programme', 'Citizenship from $100k', 'No CGT'],
     note: 'Citizenship by investment from $100k donation. No income or capital gains tax.',
@@ -2108,7 +2161,9 @@ const JURISDICTIONS = [
     income: 0, cgt: 0, corporate: 1.75, wealth: 0, inheritance: 0, social: 7, territorial: true,
     vat: 12.5, investorVisaMin: 75000, residencyEase: 8, exitTaxEase: 9, treatyRegions: ['North America','Caribbean'],
     oecdTreaties: 3,
-    travelEase: 6, familyFriendly: 6, socialServices: 3, costOfLiving: 8,
+    happinessScore: 6.0,
+    avgTemp: 26,
+    travelEase: 4, familyFriendly: 5, socialServices: 3, costOfLiving: 8,
     englishSpeaking: true, investorVisa: true, personalFriendly: true, corporateFriendly: true,
     tags: ['Territorial', 'No foreign income tax', 'QRP programme', 'English-speaking'],
     note: 'Qualified Retired Persons (QRP) programme. Foreign income not taxed.',
@@ -2118,7 +2173,9 @@ const JURISDICTIONS = [
     income: 0, cgt: 15, corporate: 30, wealth: 0, inheritance: 0, social: 10.5, territorial: true,
     vat: 13, investorVisaMin: 150000, residencyEase: 8, exitTaxEase: 9, treatyRegions: ['North America','South America'],
     oecdTreaties: 10,
-    travelEase: 7, familyFriendly: 8, socialServices: 6, costOfLiving: 8,
+    happinessScore: 6.6,
+    avgTemp: 22,
+    travelEase: 6, familyFriendly: 8, socialServices: 7, costOfLiving: 8,
     englishSpeaking: false, investorVisa: true, personalFriendly: true, corporateFriendly: true,
     tags: ['Territorial', 'No foreign income tax', 'Pensionado visa', 'Quality of life'],
     note: 'Territorial system. Pensionado and rentista visas from $1,000/mo pension.',
@@ -2128,8 +2185,10 @@ const JURISDICTIONS = [
     income: 17, cgt: 0, corporate: 20, wealth: 0, inheritance: 10, social: 5, territorial: true,
     vat: 7, investorVisaMin: 500000, residencyEase: 7, exitTaxEase: 9, treatyRegions: ['Asia','Middle East'],
     oecdTreaties: 20,
-    travelEase: 8, familyFriendly: 7, socialServices: 5, costOfLiving: 9,
-    englishSpeaking: false, investorVisa: true, personalFriendly: true, corporateFriendly: false,
+    happinessScore: 5.9,
+    avgTemp: 28,
+    travelEase: 9, familyFriendly: 6, socialServices: 5, costOfLiving: 9,
+    englishSpeaking: false, investorVisa: true, personalFriendly: true, corporateFriendly: true,
     tags: ['LTR visa', 'Low VAT 7%', 'Territorial option', 'Low cost of living'],
     note: 'Long-Term Resident (LTR) visa for HNW individuals and remote workers.',
   },
@@ -2138,8 +2197,10 @@ const JURISDICTIONS = [
     income: 3, cgt: 0, corporate: 24, wealth: 0, inheritance: 0, social: 9, territorial: true,
     vat: 10, investorVisaMin: 500000, residencyEase: 7, exitTaxEase: 9, treatyRegions: ['Asia','Middle East'],
     oecdTreaties: 26,
-    travelEase: 8, familyFriendly: 8, socialServices: 6, costOfLiving: 9,
-    englishSpeaking: true, investorVisa: true, personalFriendly: true, corporateFriendly: false,
+    happinessScore: 5.9,
+    avgTemp: 27,
+    travelEase: 9, familyFriendly: 7, socialServices: 6, costOfLiving: 9,
+    englishSpeaking: true, investorVisa: true, personalFriendly: true, corporateFriendly: true,
     tags: ['MM2H visa', 'Near-zero income tax', 'No CGT', 'Low cost of living'],
     note: 'MM2H: 10-year renewable visa. Foreign-sourced income not taxed.',
   },
@@ -2148,8 +2209,10 @@ const JURISDICTIONS = [
     income: 37, cgt: 23.8, corporate: 21, wealth: 0, inheritance: 40, social: 7.65, territorial: false,
     vat: 0, investorVisaMin: 800000, residencyEase: 4, exitTaxEase: 2, treatyRegions: ['Western Europe','Asia','Middle East','South America'],
     oecdTreaties: 38,
-    travelEase: 8, familyFriendly: 7, socialServices: 5, costOfLiving: 5,
-    englishSpeaking: true, investorVisa: true, personalFriendly: false, corporateFriendly: false,
+    happinessScore: 6.7,
+    avgTemp: 12,
+    travelEase: 10, familyFriendly: 7, socialServices: 4, costOfLiving: 4,
+    englishSpeaking: true, investorVisa: true, personalFriendly: true, corporateFriendly: true,
     tags: ['No federal VAT', 'EB-5 visa from $800k', 'Worldwide taxation', 'High inheritance tax'],
     note: 'US taxes citizens and green card holders worldwide. Exiting US tax system (expatriation) triggers an exit tax.',
   },
@@ -2158,8 +2221,10 @@ const JURISDICTIONS = [
     income: 33, cgt: 24.92, corporate: 15, wealth: 0, inheritance: 0, social: 5.95, territorial: false,
     vat: 5, investorVisaMin: 350000, residencyEase: 6, exitTaxEase: 5, treatyRegions: ['North America','Western Europe','Asia'],
     oecdTreaties: 38,
-    travelEase: 9, familyFriendly: 9, socialServices: 8, costOfLiving: 6,
-    englishSpeaking: true, investorVisa: true, personalFriendly: false, corporateFriendly: false,
+    happinessScore: 6.9,
+    avgTemp: 6,
+    travelEase: 9, familyFriendly: 9, socialServices: 8, costOfLiving: 5,
+    englishSpeaking: true, investorVisa: true, personalFriendly: true, corporateFriendly: true,
     tags: ['Deemed disposition on exit', 'No wealth tax', 'Strong social services', 'Start-up visa'],
     note: 'Canada has a deemed disposition rule on departure — a form of exit tax.',
   },
@@ -2168,8 +2233,10 @@ const JURISDICTIONS = [
     income: 57, cgt: 30, corporate: 20.6, wealth: 0, inheritance: 0, social: 7, territorial: false,
     vat: 25, investorVisaMin: 0, residencyEase: 5, exitTaxEase: 4, treatyRegions: ['Western Europe','North America','Asia'],
     oecdTreaties: 38,
-    travelEase: 9, familyFriendly: 10, socialServices: 10, costOfLiving: 5,
-    englishSpeaking: false, investorVisa: false, personalFriendly: false, corporateFriendly: false,
+    happinessScore: 7.4,
+    avgTemp: 7,
+    travelEase: 8, familyFriendly: 10, socialServices: 10, costOfLiving: 4,
+    englishSpeaking: false, investorVisa: false, personalFriendly: true, corporateFriendly: true,
     tags: ['Abolished wealth tax', 'High income tax', 'High CGT', 'Highest VAT'],
     note: 'Despite abolished wealth/inheritance taxes, income and CGT remain very high.',
   },
@@ -2178,7 +2245,9 @@ const JURISDICTIONS = [
     income: 20, cgt: 20, corporate: 0, wealth: 0, inheritance: 0, social: 16, territorial: false,
     vat: 22, investorVisaMin: 50000, residencyEase: 8, exitTaxEase: 8, treatyRegions: ['Western Europe','Eastern Europe','North America'],
     oecdTreaties: 36,
-    travelEase: 8, familyFriendly: 8, socialServices: 8, costOfLiving: 8,
+    happinessScore: 6.4,
+    avgTemp: 6,
+    travelEase: 6, familyFriendly: 8, socialServices: 8, costOfLiving: 8,
     englishSpeaking: false, investorVisa: true, personalFriendly: true, corporateFriendly: true,
     tags: ['0% retained earnings', 'E-Residency', 'EU member', 'Digital-first'],
     note: 'Corporate tax only applies on distributed profits — retained earnings are tax-free.',
@@ -2188,8 +2257,10 @@ const JURISDICTIONS = [
     income: 46.5, cgt: 0, corporate: 22, wealth: 0, inheritance: 2, social: 13, territorial: false,
     vat: 9, investorVisaMin: 280000, residencyEase: 7, exitTaxEase: 8, treatyRegions: ['Western Europe','North America','South America'],
     oecdTreaties: 8,
-    travelEase: 7, familyFriendly: 6, socialServices: 5, costOfLiving: 7,
-    englishSpeaking: true, investorVisa: true, personalFriendly: false, corporateFriendly: true,
+    happinessScore: 6.3,
+    avgTemp: 28,
+    travelEase: 5, familyFriendly: 6, socialServices: 5, costOfLiving: 5,
+    englishSpeaking: true, investorVisa: true, personalFriendly: true, corporateFriendly: true,
     tags: ['Offshore holding hub', 'Dutch law', 'No CGT', 'Treaty network'],
     note: 'Curaçao is a popular offshore corporate holding jurisdiction.',
   },
@@ -2198,8 +2269,10 @@ const JURISDICTIONS = [
     income: 40, cgt: 33, corporate: 12.5, wealth: 0, inheritance: 33, social: 4, territorial: false,
     vat: 23, investorVisaMin: 1000000, residencyEase: 6, exitTaxEase: 6, treatyRegions: ['Western Europe','North America','Asia'],
     oecdTreaties: 38,
-    travelEase: 9, familyFriendly: 9, socialServices: 8, costOfLiving: 5,
-    englishSpeaking: true, investorVisa: true, personalFriendly: false, corporateFriendly: true,
+    happinessScore: 7.0,
+    avgTemp: 10,
+    travelEase: 8, familyFriendly: 9, socialServices: 7, costOfLiving: 4,
+    englishSpeaking: true, investorVisa: true, personalFriendly: true, corporateFriendly: true,
     tags: ['12.5% corporate', 'EU member', 'Tech hub', 'Common law'],
     note: 'One of Europe\'s most competitive corporate tax regimes.',
   },
@@ -2208,8 +2281,10 @@ const JURISDICTIONS = [
     income: 45, cgt: 24, corporate: 25, wealth: 0, inheritance: 40, social: 8, territorial: false,
     vat: 20, investorVisaMin: 2000000, residencyEase: 5, exitTaxEase: 6, treatyRegions: ['Western Europe','North America','Asia','Middle East'],
     oecdTreaties: 38,
-    travelEase: 9, familyFriendly: 8, socialServices: 8, costOfLiving: 4,
-    englishSpeaking: true, investorVisa: true, personalFriendly: false, corporateFriendly: false,
+    happinessScore: 6.7,
+    avgTemp: 11,
+    travelEase: 10, familyFriendly: 8, socialServices: 8, costOfLiving: 4,
+    englishSpeaking: true, investorVisa: true, personalFriendly: true, corporateFriendly: true,
     tags: ['Non-dom abolished 2025', 'Common law', 'Global financial hub', 'High inheritance tax'],
     note: 'The non-domicile regime was abolished in April 2025. High personal and inheritance taxes apply.',
   },
@@ -2218,7 +2293,9 @@ const JURISDICTIONS = [
     income: 0, cgt: 20, corporate: 21, wealth: 0, inheritance: 0, social: 7.65, territorial: false,
     vat: 6, investorVisaMin: 800000, residencyEase: 7, exitTaxEase: 2, treatyRegions: ['North America','Caribbean','South America'],
     oecdTreaties: 38,
-    travelEase: 9, familyFriendly: 8, socialServices: 5, costOfLiving: 6,
+    happinessScore: 6.7,
+    avgTemp: 22,
+    travelEase: 10, familyFriendly: 7, socialServices: 4, costOfLiving: 5,
     englishSpeaking: true, investorVisa: true, personalFriendly: true, corporateFriendly: true,
     tags: ['No state income tax', 'No state CGT', 'No inheritance tax', 'EB-5 visa'],
     note: 'Florida has no state income tax or inheritance tax. Federal taxes still apply.',
@@ -2228,7 +2305,9 @@ const JURISDICTIONS = [
     income: 0, cgt: 20, corporate: 21, wealth: 0, inheritance: 0, social: 7.65, territorial: false,
     vat: 6.25, investorVisaMin: 800000, residencyEase: 7, exitTaxEase: 2, treatyRegions: ['North America','Caribbean','South America'],
     oecdTreaties: 38,
-    travelEase: 8, familyFriendly: 7, socialServices: 5, costOfLiving: 7,
+    happinessScore: 6.7,
+    avgTemp: 18,
+    travelEase: 9, familyFriendly: 7, socialServices: 3, costOfLiving: 6,
     englishSpeaking: true, investorVisa: true, personalFriendly: true, corporateFriendly: true,
     tags: ['No state income tax', 'No state CGT', 'No inheritance tax', 'Business-friendly'],
     note: 'Texas has no state income tax. Federal taxes still apply.',
@@ -2238,7 +2317,9 @@ const JURISDICTIONS = [
     income: 4.4, cgt: 4.4, corporate: 4.4, wealth: 0, inheritance: 0, social: 7.65, territorial: false,
     vat: 2.9, investorVisaMin: 800000, residencyEase: 7, exitTaxEase: 2, treatyRegions: ['North America'],
     oecdTreaties: 38,
-    travelEase: 8, familyFriendly: 8, socialServices: 6, costOfLiving: 6,
+    happinessScore: 6.7,
+    avgTemp: 10,
+    travelEase: 8, familyFriendly: 8, socialServices: 4, costOfLiving: 5,
     englishSpeaking: true, investorVisa: true, personalFriendly: true, corporateFriendly: true,
     tags: ['Flat 4.4% state tax', 'No inheritance tax', 'Growing tech hub', 'Outdoor lifestyle'],
     note: 'Colorado has a flat 4.4% state income tax rate. Federal taxes apply.',
@@ -2248,8 +2329,10 @@ const JURISDICTIONS = [
     income: 10.9, cgt: 10.9, corporate: 7.25, wealth: 0, inheritance: 16, social: 7.65, territorial: false,
     vat: 4, investorVisaMin: 800000, residencyEase: 6, exitTaxEase: 2, treatyRegions: ['North America','Western Europe'],
     oecdTreaties: 38,
-    travelEase: 10, familyFriendly: 7, socialServices: 7, costOfLiving: 3,
-    englishSpeaking: true, investorVisa: true, personalFriendly: false, corporateFriendly: false,
+    happinessScore: 6.7,
+    avgTemp: 13,
+    travelEase: 10, familyFriendly: 7, socialServices: 5, costOfLiving: 2,
+    englishSpeaking: true, investorVisa: true, personalFriendly: true, corporateFriendly: true,
     tags: ['High state taxes', 'Global financial hub', 'Inheritance tax', 'NYC surcharge'],
     note: 'New York has some of the highest state and city taxes in the US. Listed for comparison.',
   },
@@ -2258,8 +2341,10 @@ const JURISDICTIONS = [
     income: 13.3, cgt: 13.3, corporate: 8.84, wealth: 0, inheritance: 0, social: 7.65, territorial: false,
     vat: 7.25, investorVisaMin: 800000, residencyEase: 6, exitTaxEase: 2, treatyRegions: ['North America','Asia'],
     oecdTreaties: 38,
-    travelEase: 9, familyFriendly: 7, socialServices: 6, costOfLiving: 3,
-    englishSpeaking: true, investorVisa: true, personalFriendly: false, corporateFriendly: false,
+    happinessScore: 6.7,
+    avgTemp: 17,
+    travelEase: 10, familyFriendly: 7, socialServices: 5, costOfLiving: 2,
+    englishSpeaking: true, investorVisa: true, personalFriendly: true, corporateFriendly: true,
     tags: ['Highest US state tax', 'No inheritance tax', 'Tech hub', 'Prop 30 surcharge'],
     note: 'California has the highest state income tax in the US at 13.3%.',
   },
@@ -2268,7 +2353,9 @@ const JURISDICTIONS = [
     income: 35, cgt: 35, corporate: 30, wealth: 0, inheritance: 0, social: 6.4, territorial: false,
     vat: 16, investorVisaMin: 50000, residencyEase: 9, exitTaxEase: 9, treatyRegions: ['North America','South America','Western Europe'],
     oecdTreaties: 33,
-    travelEase: 7, familyFriendly: 7, socialServices: 5, costOfLiving: 9,
+    happinessScore: 6.3,
+    avgTemp: 21,
+    travelEase: 8, familyFriendly: 5, socialServices: 5, costOfLiving: 9,
     englishSpeaking: false, investorVisa: true, personalFriendly: true, corporateFriendly: true,
     tags: ['Low cost of living', 'Retirement visa', 'Near-shore hub', 'Territorial option via treaty'],
     note: 'Mexico offers a low cost of living and popular retirement/temporary resident visa.',
@@ -2278,8 +2365,10 @@ const JURISDICTIONS = [
     income: 27.5, cgt: 22.5, corporate: 34, wealth: 0, inheritance: 8, social: 11, territorial: false,
     vat: 17, investorVisaMin: 150000, residencyEase: 7, exitTaxEase: 7, treatyRegions: ['South America','Western Europe'],
     oecdTreaties: 20,
-    travelEase: 7, familyFriendly: 7, socialServices: 5, costOfLiving: 8,
-    englishSpeaking: false, investorVisa: true, personalFriendly: false, corporateFriendly: false,
+    happinessScore: 6.0,
+    avgTemp: 25,
+    travelEase: 8, familyFriendly: 5, socialServices: 6, costOfLiving: 7,
+    englishSpeaking: false, investorVisa: true, personalFriendly: true, corporateFriendly: true,
     tags: ['Large domestic market', 'Growing tech hub', 'High corporate tax', 'Listed for comparison'],
     note: 'Brazil has a large and growing economy but high tax burden.',
   },
@@ -2288,8 +2377,10 @@ const JURISDICTIONS = [
     income: 47, cgt: 28, corporate: 25, wealth: 3.5, inheritance: 34, social: 6.35, territorial: false,
     vat: 21, investorVisaMin: 500000, residencyEase: 6, exitTaxEase: 6, treatyRegions: ['Western Europe','South America','North Africa'],
     oecdTreaties: 38,
-    travelEase: 9, familyFriendly: 9, socialServices: 8, costOfLiving: 8,
-    englishSpeaking: false, investorVisa: true, personalFriendly: false, corporateFriendly: false,
+    happinessScore: 6.3,
+    avgTemp: 16,
+    travelEase: 10, familyFriendly: 9, socialServices: 8, costOfLiving: 7,
+    englishSpeaking: false, investorVisa: true, personalFriendly: true, corporateFriendly: true,
     tags: ['Beckham Law', 'Golden Visa', 'High wealth tax', 'Quality of life'],
     note: 'Spain\'s "Beckham Law" offers a flat 24% rate for qualifying foreign workers for up to 6 years.',
   },
@@ -2298,8 +2389,10 @@ const JURISDICTIONS = [
     income: 45, cgt: 30, corporate: 25, wealth: 1.5, inheritance: 45, social: 22, territorial: false,
     vat: 20, investorVisaMin: 300000, residencyEase: 6, exitTaxEase: 5, treatyRegions: ['Western Europe','North Africa','Middle East'],
     oecdTreaties: 38,
-    travelEase: 9, familyFriendly: 9, socialServices: 9, costOfLiving: 5,
-    englishSpeaking: false, investorVisa: true, personalFriendly: false, corporateFriendly: false,
+    happinessScore: 6.7,
+    avgTemp: 12,
+    travelEase: 10, familyFriendly: 9, socialServices: 9, costOfLiving: 5,
+    englishSpeaking: false, investorVisa: true, personalFriendly: true, corporateFriendly: true,
     tags: ['High social charges', 'IFI wealth tax on property', 'High inheritance tax', 'Listed for comparison'],
     note: 'France has very high social charges and inheritance tax. Listed for comparison.',
   },
@@ -2315,6 +2408,7 @@ const state = {
   selectedCriteria: new Set(),
   preferredRegion: null,
   motivation: null,
+  motivWeight: 50,      // 0 = pure tax, 100 = pure lifestyle
   preferredLanguage: null,
   wealthOk: null,
   visaOk: null,
@@ -2374,7 +2468,7 @@ function goTo(step) {
     mapWrap.style.margin = '0 0 16px 0';
     mapWrap.style.border = '1px solid var(--border)';
   } else {
-    mapSvg.style.height = '320px';
+    mapSvg.style.height = '220px';
     mapWrap.style.borderRadius = '0';
     mapWrap.style.border = 'none';
     mapWrap.style.borderBottom = '1px solid var(--border)';
@@ -2604,11 +2698,33 @@ function updateStep3Btn() {
 // ═══════════════════════════════════════════
 //  STEP 4 — MOTIVATION
 // ═══════════════════════════════════════════
-function selectMotivation(type) {
-  state.motivation = type;
-  ['tax','lifestyle','both'].forEach(t => {
-    document.getElementById(`motiv-${t}`)?.classList.toggle('selected', t === type);
-  });
+function updateMotivSlider(v) {
+  v = parseInt(v);
+  state.motivWeight = v;
+
+  // Derive motivation category for step-5b slider visibility
+  state.motivation = v <= 30 ? 'tax' : v >= 70 ? 'lifestyle' : 'both';
+
+  // Update label
+  const labelText = document.getElementById('motiv-label-text');
+  const labelSub  = document.getElementById('motiv-label-sub');
+  if (v <= 15) {
+    labelText.textContent = 'Purely tax-driven';
+    labelSub.textContent  = 'Lowest possible tax burden';
+  } else if (v <= 35) {
+    labelText.textContent = 'Mostly tax';
+    labelSub.textContent  = 'Tax first, lifestyle considered';
+  } else if (v <= 65) {
+    labelText.textContent = 'Balanced';
+    labelSub.textContent  = 'Tax and lifestyle equally important';
+  } else if (v <= 85) {
+    labelText.textContent = 'Mostly lifestyle';
+    labelSub.textContent  = 'Climate, happiness & quality of life first';
+  } else {
+    labelText.textContent = 'Purely lifestyle';
+    labelSub.textContent  = 'Climate, happiness & family environment';
+  }
+
   const btn = document.getElementById('step4-next');
   btn.disabled = false;
   btn.classList.add('ready');
@@ -2645,8 +2761,8 @@ function buildPrefSliders() {
     },
     {
       id: 'pref-col',
-      label: 'Low cost of living (incl. VAT)',
-      sub: 'How important is affordability — including everyday costs and VAT rate?',
+      label: 'Low cost of living (incl. property & VAT)',
+      sub: 'How important is affordability? Scores based on Numbeo Cost of Living Index, average real property prices, and VAT rate.',
       min: 0, max: 10, step: 1, val: state.prefs.costOfLiving,
       format: v => v === 0 ? 'Not a factor' : v <= 3 ? 'Low importance' : v <= 7 ? 'Moderate' : 'Very important',
       key: 'costOfLiving',
@@ -2679,25 +2795,25 @@ function buildPrefSliders() {
       {
         id: 'pref-travel',
         label: 'Ease of international travel',
-        sub: 'How important is it to have direct flights, visa-free access, and good transport links?',
+        sub: 'Based on number of direct international flight destinations from the main airport(s). Dubai, Singapore, London and New York score highest.',
         min: 0, max: 10, step: 1, val: state.prefs.travelEase,
-        format: v => v === 0 ? 'Not a factor' : v <= 3 ? 'Low' : v <= 7 ? 'Moderate' : 'Very important',
+        format: v => v === 0 ? 'Low' : v <= 3 ? 'Low' : v <= 7 ? 'Moderate' : 'High',
         key: 'travelEase',
       },
       {
         id: 'pref-family',
         label: 'Family friendliness',
-        sub: 'School quality, healthcare access, safety — how much does this matter?',
+        sub: 'School quality, healthcare access, safety and child services — how much does this matter?',
         min: 0, max: 10, step: 1, val: state.prefs.familyFriendly,
-        format: v => v === 0 ? 'Not a factor' : v <= 3 ? 'Low' : v <= 7 ? 'Moderate' : 'Very important',
+        format: v => v === 0 ? 'Low' : v <= 3 ? 'Low' : v <= 7 ? 'Moderate' : 'High',
         key: 'familyFriendly',
       },
       {
         id: 'pref-social',
         label: 'Free social services',
-        sub: 'Public healthcare, education, social safety net — how much do you value this?',
+        sub: 'Based on cost of public healthcare, education (kindergarten to college), and elder care. Sweden, France and Luxembourg score highest.',
         min: 0, max: 10, step: 1, val: state.prefs.socialServices,
-        format: v => v === 0 ? 'Not a factor' : v <= 3 ? 'Low' : v <= 7 ? 'Moderate' : 'Very important',
+        format: v => v === 0 ? 'Low' : v <= 3 ? 'Low' : v <= 7 ? 'Moderate' : 'High',
         key: 'socialServices',
       }
     );
@@ -2722,7 +2838,7 @@ function buildPrefSliders() {
       <input type="range" class="pref-slider" min="${s.min}" max="${s.max}" step="${s.step}" value="${s.val}"
         data-key="${s.key}" data-fmtid="${s.id}"
         oninput="state.prefs[this.dataset.key]=+this.value;document.getElementById(this.dataset.fmtid+'-val').textContent=formatPref(this.dataset.key,+this.value);updateLivePanel()">
-      <div class="pref-scale"><span>Not a factor</span><span>Very important</span></div>
+      <div class="pref-scale"><span>Low</span><span>High</span></div>
     </div>`;
   }).join('');
 }
@@ -2732,7 +2848,7 @@ function formatPref(key, v) {
   const visaLabels  = ['No investor visa','$50k','$100k','$200k','$300k','$500k','$750k','$1M','$1.5M','$2M','Any'];
   if (key === 'investorVisaMax') return visaLabels[v] || 'Any';
   if (key === 'residencyEaseMin') return v === 0 ? 'Not a factor' : `Min ease: ${v}/10`;
-  const scale = v === 0 ? 'Not a factor' : v <= 3 ? 'Low importance' : v <= 7 ? 'Moderate' : 'Very important';
+  const scale = v === 0 ? 'Low' : v <= 3 ? 'Low' : v <= 7 ? 'Moderate' : 'High';
   return scale;
 }
 
@@ -2802,7 +2918,7 @@ function selectLanguage(lang) {
 // ═══════════════════════════════════════════
 function scoreJurisdiction(j) {
   const criteria = [...state.selectedCriteria];
-  if (criteria.length === 0) return 0;
+  if (criteria.length === 0) return 50;
 
   let met = 0;
   criteria.forEach(c => {
@@ -2814,11 +2930,52 @@ function scoreJurisdiction(j) {
       case 'inheritance': if (j.inheritance === 0) met++; break;
       case 'social':      if (j.social      <= 5)  met++; break;
       case 'territorial': if (j.territorial)       met++; break;
-      case 'visa':        if (j.investorVisa)       met++; break;
     }
   });
-
   return Math.round((met / criteria.length) * 100);
+}
+
+function scoreWithMotivation(j) {
+  let s = scoreJurisdiction(j);
+
+  const mw = (state.motivWeight || 50) / 100;
+  const taxWeight       = 1 - mw;
+  const lifestyleWeight = mw;
+
+  // Tax scoring
+  if (taxWeight > 0) {
+    const avgTax = (j.income + j.cgt + j.corporate) / 3;
+    const taxScore = avgTax === 0 ? 1 : avgTax < 10 ? 0.8 : avgTax < 20 ? 0.5 : avgTax < 35 ? 0.2 : 0;
+    s = Math.min(100, s + taxScore * taxWeight * 18);
+    if (state.prefs.taxTreatyRegion && j.treatyRegions?.includes(state.prefs.taxTreatyRegion)) {
+      s = Math.min(100, s + taxWeight * 12);
+    }
+  }
+
+  // Lifestyle scoring
+  if (lifestyleWeight > 0) {
+    if (j.avgTemp !== undefined) {
+      const tempScore = Math.max(0, 1 - Math.abs(j.avgTemp - 22) / 22);
+      s = Math.min(100, s + tempScore * lifestyleWeight * 10);
+    }
+    if (j.happinessScore !== undefined) {
+      s = Math.min(100, s + (j.happinessScore / 10) * lifestyleWeight * 10);
+    }
+    const p = state.prefs;
+    if (p.travelEase > 0 && j.travelEase)     s = Math.min(100, s + (j.travelEase/10)*(p.travelEase/10)*lifestyleWeight*8);
+    if (p.familyFriendly > 0 && j.familyFriendly) s = Math.min(100, s + (j.familyFriendly/10)*(p.familyFriendly/10)*lifestyleWeight*8);
+    if (p.socialServices > 0 && j.socialServices) s = Math.min(100, s + (j.socialServices/10)*(p.socialServices/10)*lifestyleWeight*7);
+    if (j.englishSpeaking) s = Math.min(100, s + lifestyleWeight * 5);
+  }
+
+  // Cost of living
+  if (state.prefs.costOfLiving > 0) {
+    const colScore = (j.costOfLiving || 5) / 10;
+    const vatScore = j.vat === 0 ? 1 : j.vat <= 7 ? 0.85 : j.vat <= 12 ? 0.65 : j.vat <= 18 ? 0.45 : j.vat <= 22 ? 0.3 : 0.15;
+    s = Math.min(100, s + (colScore * 0.7 + vatScore * 0.3) * (state.prefs.costOfLiving / 10) * 12);
+  }
+
+  return Math.round(s);
 }
 
 // ═══════════════════════════════════════════
@@ -2856,6 +3013,38 @@ function oecdTreatyHtml(n) {
   </div>`;
 }
 
+// Normalize scores so best = 100%, worst scales relative to it.
+// With no meaningful input, all scores are equal → all get 85% (green).
+function normalizeScores(arr) {
+  if (!arr.length) return arr;
+  const scores = arr.map(j => j._score);
+  const max = Math.max(...scores);
+  const min = Math.min(...scores);
+  const range = max - min;
+
+  return arr.map(j => {
+    let norm;
+    if (range === 0) {
+      // All equal — green (85%) to signal all are good options
+      norm = 85;
+    } else {
+      // Scale: best → 100, rest proportional, floor at 55
+      norm = Math.round(55 + ((j._score - min) / range) * 45);
+    }
+    return { ...j, _score: norm };
+  });
+}
+
+function scoreColor(pct) {
+  if (pct === null || pct === undefined) return '#2a7aaa';
+  if (pct >= 95) return '#2ecc71';   // strong green
+  if (pct >= 88) return '#5dbb63';   // medium green
+  if (pct >= 82) return '#a8d86e';   // light green
+  if (pct >= 76) return '#f0c040';   // yellow
+  if (pct >= 70) return '#e05050';   // strong red
+  return '#c03030';                   // deep red (below 70)
+}
+
 function valClass(v, type) {
   if (type === 'flag') return v ? '<span style="color:var(--success)">✓ Yes</span>' : '<span style="color:var(--danger)">✗ No</span>';
   if (v === 0) return `<span class="rt-val zero">0%</span>`;
@@ -2882,7 +3071,8 @@ function buildFilteredPool() {
   }
 
   if (state.selectedCriteria.size > 0) {
-    const threshold = state.selectedCriteria.size === 1 ? 1 : Math.ceil(state.selectedCriteria.size * 0.5);
+    // Only filter out jurisdictions that meet NONE of the selected criteria
+    // (i.e. keep jurisdictions that match at least 1 criterion)
     pool = pool.filter(j => {
       let met = 0;
       state.selectedCriteria.forEach(c => {
@@ -2897,12 +3087,11 @@ function buildFilteredPool() {
           case 'visa':        if (j.investorVisa)       met++; break;
         }
       });
-      return met >= threshold;
+      return met >= 1;
     });
   }
 
   if (state.wealthOk === false) pool = pool.filter(j => j.wealth === 0);
-  if (state.visaOk === false)   pool = pool.filter(j => !j.investorVisa || j.investorVisaMin === 0);
 
   if (state.prefs.investorVisaMax < 10) {
     const visaAmounts = [0,50000,100000,200000,300000,500000,750000,1000000,1500000,2000000,99999999];
@@ -2921,46 +3110,8 @@ function showResults() {
 
   let pool = buildFilteredPool();
 
-  // Score and sort — apply all preference weights
-  const scored = pool.map(j => {
-    let s = state.selectedCriteria.size > 0 ? scoreJurisdiction(j) : 50;
-
-    // Motivation modifier
-    if (state.motivation === 'tax') {
-      const avgTax = (j.income + j.cgt + j.corporate) / 3;
-      if (avgTax === 0) s = Math.min(100, s + 15);
-      else if (avgTax < 10) s = Math.min(100, s + 10);
-      else if (avgTax > 30) s = Math.max(0, s - 15);
-      // Tax treaty region boost
-      if (state.prefs.taxTreatyRegion && j.treatyRegions) {
-        if (j.treatyRegions.includes(state.prefs.taxTreatyRegion)) s = Math.min(100, s + 12);
-      }
-    } else if (state.motivation === 'lifestyle') {
-      if (j.englishSpeaking) s = Math.min(100, s + 6);
-      if (j.wealth > 1) s = Math.max(0, s - 5);
-      // Lifestyle preference weights
-      const p = state.prefs;
-      if (p.travelEase > 0 && j.travelEase) s = Math.min(100, s + (j.travelEase / 10) * (p.travelEase / 10) * 12);
-      if (p.familyFriendly > 0 && j.familyFriendly) s = Math.min(100, s + (j.familyFriendly / 10) * (p.familyFriendly / 10) * 12);
-      if (p.socialServices > 0 && j.socialServices) s = Math.min(100, s + (j.socialServices / 10) * (p.socialServices / 10) * 10);
-    } else if (state.motivation === 'both') {
-      const avgTax = (j.income + j.cgt) / 2;
-      if (avgTax < 15) s = Math.min(100, s + 6);
-      if (j.englishSpeaking) s = Math.min(100, s + 4);
-      if (state.prefs.taxTreatyRegion && j.treatyRegions?.includes(state.prefs.taxTreatyRegion)) s = Math.min(100, s + 8);
-    }
-
-    // Cost of living / VAT boost (all users)
-    if (state.prefs.costOfLiving > 0 && j.costOfLiving) {
-      s = Math.min(100, s + (j.costOfLiving / 10) * (state.prefs.costOfLiving / 10) * 10);
-    }
-    if (state.prefs.vatImportance > 0 && j.vat !== undefined) {
-      const vatScore = j.vat === 0 ? 10 : j.vat < 10 ? 7 : j.vat < 15 ? 5 : j.vat < 20 ? 3 : 1;
-      s = Math.min(100, s + (vatScore / 10) * (state.prefs.vatImportance / 10) * 8);
-    }
-
-    return { ...j, _score: Math.round(s) };
-  });
+  // Score using shared scoreWithMotivation function, then normalize relative to pool
+  const scored = normalizeScores(pool.map(j => ({ ...j, _score: scoreWithMotivation(j) })));
   scored.sort((a, b) => b._score - a._score);
 
   const topGrid = document.getElementById('results-top');
@@ -2993,7 +3144,7 @@ function showResults() {
 
   const renderCard = (j, i, isTop) => {
     const pct = j._score;
-    const style = `style="--pct:${pct * 3.6}deg"`;
+    const col = scoreColor(pct);
     const tags = j.tags.map(t => `<span class="tag good">${t}</span>`).join('');
 
     return `
@@ -3007,8 +3158,8 @@ function showResults() {
             </div>
           </div>
           <div class="score-badge">
-            <div class="score-ring" ${style}>
-              <span class="score-num">${pct}%</span>
+            <div class="score-ring" style="--score-col:${col}">
+              <span class="score-num" style="color:${col}">${pct}%</span>
             </div>
             ${isTop ? '<span class="top-badge">⭐ Top Pick</span>' : ''}
           </div>
@@ -3108,10 +3259,10 @@ const JURISDICTION_COORDS = {
 
 // Region zoom targets
 const REGION_ZOOM = {
-  'Americas':    { rotate: [85,   -10], scale: 2.6 },
-  'Europe':      { rotate: [-12,  -52], scale: 4.2 },
-  'Middle East': { rotate: [-45,  -25], scale: 5.0 },
-  'Asia':        { rotate: [-105, -10], scale: 3.2 },
+  'Americas':    { rotate: [85,   -10], scale: 2.2 },
+  'Europe':      { rotate: [-12,  -52], scale: 3.5 },
+  'Middle East': { rotate: [-45,  -25], scale: 4.0 },
+  'Asia':        { rotate: [-105, -10], scale: 2.8 },
 };
 
 let _worldCache = null;
@@ -3157,7 +3308,7 @@ function renderWorldMap(scored, allJurisdictions) {
         const coords = JURISDICTION_COORDS[j.name];
         if (!coords) return;
         const [px, py] = p([coords[1], coords[0]]);
-        if (isNaN(px) || isNaN(py) || px < -60 || px > W+60 || py < -60 || py > H+60) return;
+        if (isNaN(px) || isNaN(py) || px < -120 || px > W+120 || py < -120 || py > H+120) return;
 
         const isActive = activeNames.has(j.name);
         const scored_j = scored.find(s => s.name === j.name);
@@ -3191,7 +3342,7 @@ function renderWorldMap(scored, allJurisdictions) {
           // Active jurisdiction
           const pct = hasScore ? scored_j._score : null;
           const r = isTop ? 10 : (hasScore ? 7 : 5);
-          const col = isTop ? '#c9a84c' : (hasScore ? '#E4EAA3' : '#4aa8d8');
+          const col = isTop ? '#c9a84c' : (hasScore ? scoreColor(pct) : '#4aa8d8');
           if (isTop) {
             dotG.append('circle').attr('cx', px).attr('cy', py).attr('r', r+6)
               .attr('fill', 'none').attr('stroke', col).attr('stroke-width', 1.5).attr('opacity', 0.35);
@@ -3293,10 +3444,10 @@ function updateLivePanel() {
 
   const pool = buildFilteredPool();
 
-  // Sort
-  const sorted = state.selectedCriteria.size > 0
-    ? pool.map(j => ({ ...j, _score: scoreJurisdiction(j) })).sort((a, b) => b._score - a._score)
-    : pool.map(j => ({ ...j, _score: null })).sort((a, b) => a.name.localeCompare(b.name));
+  // Score with motivation weighting applied
+  const hasInputs = state.selectedCriteria.size > 0 || state.motivWeight !== 50;
+  const rawScored = pool.map(j => ({ ...j, _score: scoreWithMotivation(j) }));
+  const sorted = normalizeScores(rawScored).sort((a, b) => b._score - a._score);
 
   count.textContent = sorted.length;
   renderWorldMap(sorted, [...JURISDICTIONS]);
@@ -3316,11 +3467,16 @@ function updateLivePanel() {
     return;
   }
 
-  list.innerHTML = `<div class="lp-grid">${sorted.map((j, i) => `
-    <div class="lp-item" style="animation-delay:${Math.min(i,20) * 0.03}s" onclick="openModal('${j.name.replace(/'/g,"\\'")}')">
+  list.innerHTML = `<div class="lp-grid">${sorted.map((j, i) => {
+    const col = scoreColor(j._score);
+    const scoreHtml = j._score !== null ? `<span class="lp-score" style="color:${col}">${j._score}%</span>` : '';
+    const barStyle = j._score !== null ? `--lp-score-col:${col}` : '';
+    return `<div class="lp-item" style="${barStyle};animation-delay:${Math.min(i,20)*0.03}s" onclick="openModal('${j.name.replace(/'/g,"\\'")}')">
       <span class="lp-flag">${j.flag}</span>
       <span class="lp-name">${j.name}</span>
-    </div>`).join('')}</div>`;
+      ${scoreHtml}
+    </div>`;
+  }).join('')}</div>`;
 }
 
 // ═══════════════════════════════════════════
@@ -3332,6 +3488,13 @@ function restart() {
   state.selectedCriteria.clear();
   state.preferredRegion = null;
   state.motivation = null;
+  state.motivWeight = 50;
+  const motivSlider = document.getElementById('motiv-slider');
+  if (motivSlider) { motivSlider.value = 50; }
+  const motivLabelText = document.getElementById('motiv-label-text');
+  if (motivLabelText) { motivLabelText.textContent = 'Move the slider'; }
+  const motivLabelSub = document.getElementById('motiv-label-sub');
+  if (motivLabelSub) { motivLabelSub.textContent = 'to set your priority'; }
   state.preferredLanguage = null;
   state.wealthOk = null;
   state.visaOk = null;
@@ -3355,9 +3518,6 @@ function restart() {
   document.getElementById('step6-next').classList.remove('ready');
   document.getElementById('step7-next').disabled = true;
   document.getElementById('step7-next').classList.remove('ready');
-  ['motiv-tax','motiv-lifestyle','motiv-both'].forEach(id => {
-    document.getElementById(id)?.classList.remove('selected');
-  });
   ['americas','europe','middleeast','asia'].forEach(r => {
     document.getElementById(`region-${r}`)?.classList.remove('selected');
   });
